@@ -1,0 +1,23 @@
+{
+   "name": "jeach-battleship",
+   "version": "1.0.0",
+   "description": "A simple multi-player battleship game",
+   "author": "Christian Jean",
+   "main": "server.js",
+   "license": "See 'LICENSE' file",
+   "scripts": {
+      "start": "node server.js"
+   },
+   "keywords": [
+      "nuvoola",
+      "luke"
+   ],
+   "dependencies": {
+      "cors": "^2.8.5",
+      "dotenv": "^16.4.7",
+      "express": "^4.21.2",
+      "http": "0.0.1-security",
+      "morgan": "^1.10.0",
+      "socket.io": "^4.8.1"
+   }
+}

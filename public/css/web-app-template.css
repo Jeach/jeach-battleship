@@ -1,0 +1,201 @@
+/*
+ * Copyright (C) 2023 Nuvoola AI, Inc.
+ * All rights reserved.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION!
+ *
+ * Disclosure or use in part or in whole without prior written consent
+ * constitutes an infringement of copyright laws which may be punishable
+ * by law.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL
+ * THE LICENSOR OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*--------------------------------------------------------------------------
+  PAGE
+--------------------------------------------------------------------------*/
+
+body,
+html {
+   padding: 0px;
+   margin: 0px;
+   font: 14px 'Roboto', Helvetica, 'Lucida Grande', Arial, sans-serif;
+   font-weight: normal;
+   color: rgb(120, 120, 120);
+   height: 100%;
+   overflow: hidden;
+}
+
+/*===========================================================================
+  LAYOUT
+===========================================================================*/
+
+/*--------------------------------------------------------------------------
+  Preset all our panes
+--------------------------------------------------------------------------*/
+
+.ui-layout-pane {
+   padding: 0px;
+   margin: 0px;
+}
+
+/*--------------------------------------------------------------------------
+  Define our north and south panes (banner and footer)
+--------------------------------------------------------------------------*/
+
+.ui-layout-north {
+   background-color: #5197d3;
+   margin: 0px;
+   padding: 0px;
+   border: 1px solid #206095;
+}
+
+.ui-layout-south {
+   background-color: #dfdfdf;
+   margin: 0px;
+   padding: 6px;
+}
+
+/*--------------------------------------------------------------------------
+  Define our header and footer panels
+--------------------------------------------------------------------------*/
+
+.ui-layout-header {
+   color: rgb(100, 100, 100);
+   font-size: 15px;
+   font-weight: 600;
+   margin: 0px;
+   padding: 8px;
+   background-color: #f0f0f0;
+   border-bottom: 1px solid #ccc;
+}
+
+.ui-layout-footer {
+   color: rgb(100, 100, 100);
+   margin: 0px;
+   padding: 8px;
+   background-color: #f8f8f8;
+   border-top: 1px solid #ccc;
+}
+
+/*--------------------------------------------------------------------------
+  Define our content areas
+--------------------------------------------------------------------------*/
+
+.ui-layout-content {
+   color: #888;
+   padding: 6px;
+   margin: 0px;
+}
+
+/*--------------------------------------------------------------------------
+  App banner (logo, app header)
+--------------------------------------------------------------------------*/
+
+.app-banner {
+   display: flex;
+   align-items: center;
+}
+
+#app-header-logo {
+   width: auto;
+   height: 60px;
+}
+
+#app-header-version {
+   color: #b1dbfd !important;
+   /* color: #206095 !important; */
+   font: 16px Helvetica;
+   font-weight: bold;
+   color: rgb(100, 100, 200);
+   padding-left: 6px;
+   padding-top: 38px;
+}
+
+/*--------------------------------------------------------------------------
+  App footer
+--------------------------------------------------------------------------*/
+
+.app-banner {
+   display: flex;
+   align-items: center;
+}
+
+#app-footer-text {
+   font-size: 13px;
+}
+
+/*--------------------------------------------------------------------------
+  Game Controls
+--------------------------------------------------------------------------*/
+
+#app-controls {
+   position: absolute;
+   float: right;
+   margin: 0px;
+   padding: 3px;
+   top: 5px;
+   right: 9px;
+}
+
+.app-button {
+   cursor: pointer;
+   padding: 8px;
+   background-color: #007bff;
+   color: white;
+   border: 1px solid #366288;
+   border-radius: 6px;
+   font-size: 14px;
+   width: 120px;
+}
+
+.app-button:hover {
+   background-color: #0056b3;
+}
+
+/*--------------------------------------------------------------------------
+  Game panel
+--------------------------------------------------------------------------*/
+
+.ui-layout-pane-center {
+   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(200, 200, 200, 0.5)), url('/images/battleship-background-1.png');
+   background-size: cover;
+   border: 0px;
+}
+
+#app-username-container {
+   position: absolute;
+   top: 40%;
+   left: 40%;
+   width: 300px;
+   padding: 30px;
+   /* padding-right: 50px; */
+   border-radius: 8px;
+   border: 2px solid rgb(2, 13, 109);
+   background-color: rgba(100, 100, 100, 0.35);
+}
+
+#app-username-label {
+   color: yellow;
+   font-size: 20px;
+   display: block;
+   margin-bottom: 10px;
+}
+
+#app-username-input {
+   padding: 10px;
+   font-size: 16px;
+   width: 90%;
+   max-width: 300px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+}

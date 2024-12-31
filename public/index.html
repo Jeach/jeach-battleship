@@ -1,0 +1,339 @@
+<!--
+ * Copyright (C) 2023 Nuvoola AI, Inc.
+ * All rights reserved.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION!
+ *
+ * Disclosure or use in part or in whole without prior written consent
+ * constitutes an infringement of copyright laws which may be punishable
+ * by law.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL
+ * THE LICENSOR OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ -->
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Web App Template</title>
+
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <meta name="author" content="Christian Jean" />
+      <meta name="description" content="Web Application Template" />
+
+      <meta http-equiv="Cache-Control" content="max-age=0" />
+      <meta http-equiv="Cache-Control" content="no-cache" />
+      <meta http-equiv="Expires" content="0" />
+      <meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+      <meta http-equiv="Pragma" content="no-cache" />
+
+      <link rel="icon" href="/images/favicon.png" />
+
+      <!-- Third party CSS -->
+      <link rel="stylesheet" href="/css/ext/jquery-layout-1.4.3.css" />
+      <link rel="stylesheet" href="/css/ext/jquery-dataTables.min.css" />
+      <link rel="stylesheet" href="/css/ext/jquery-ui-1.13.2.css" />
+
+      <link rel="stylesheet" href="/css/ext/font-awesome.min.css" />
+
+      <!-- Domain specific CSS -->
+      <link rel="stylesheet" href="/css/web-app-template.css" />
+
+      <!-- Third party JS libraries -->
+      <script src="/js/ext/jquery-2.0.3.min.js"></script>
+      <script src="/js/ext/jquery-layout.min-1.4.3.js"></script>
+      <script src="/js/ext/jquery-ui-1.12.1.min.js"></script>
+      <script src="/js/ext/jquery-dataTables.min.js"></script>
+
+      <script src="/js/ext/socket.io.min.js"></script>
+      <script src="/js/ext/mousetrap.min.js"></script>
+      <script src="/js/ext/sha1-0.6.0.min.js"></script>
+
+      <script src="/js/ext/moment.min-2.27.0.js"></script>
+      <script src="/js/ext/moment-locals.min-2.27.0.js"></script>
+
+      <!-- Proprietary JS libraries -->
+      <script src="/js/JxLogger.js"></script>
+      <script src="/js/JxValidate.js"></script>
+      <script src="/js/JxLayout.js"></script>
+      <script src="/js/JxWebSocket.js"></script>
+      <script src="/js/JxToolbox.js"></script>
+      <script src="/js/JxLoremIpsum.js"></script>
+
+      <!-- Domain specific JS libraries -->
+      <script src="/js/WebAppTemplate.js"></script>
+
+      <script type="text/javascript">
+         const log = JxLogger.getInstance('index.html', JxLogger.DEBUG);
+
+         const AUDIO_TRACKS = [
+            'jiglr-whisper-166871.mp3',
+            'breaking-news-151090.mp3',
+            'extreme-sport-driving-157970.mp3',
+            'and-so-it-begins-196638.mp3',
+            'ascend-261733.mp3',
+            'cap-keysi-remix-by-aap-featuring-5ocrates-123687.mp3',
+            'chosen-one-178816.mp3',
+            'cyberpunk-150207.mp3',
+            'decisive-race-154402.mp3',
+            'digital-adrenaline-159491.mp3',
+            'discipline-174789.mp3',
+            'dramatic-hi-tech-109538.mp3',
+            'drive-breakbeat-173062.mp3',
+            'gaining-speed-154423.mp3',
+            'heavy-racing-151129.mp3',
+            'highway-trap-hip-hop-music-191909.mp3',
+            'jiglr-gang-166873.mp3',
+            'jirian-catch-me-122910.mp3',
+            'like-a-boss-136519.mp3',
+            'metal-gear-136567.mp3',
+            'moment-on-the-show-drill-cinematic-beat-174666.mp3',
+            'near-danger-10375.mp3',
+            'power-action-drive-173502.mp3',
+            'power-drive-rock-2-versions-165548.mp3',
+            'ready-for-takeoff-151528.mp3',
+            'retro-games-glitch-technology-synthwave-199939.mp3',
+            'savage-4-version-154878.mp3',
+            'sport-extreme-dubstep-dance-160020.mp3',
+            'stomp-and-claps-141690.mp3',
+            'summer-inspiring-dubstep-154614.mp3',
+            'synthwave-retrowave-sythpop-121540.mp3',
+            'traveling-memories-technology-future-synthwave-199941.mp3',
+            'urban-night-151632.mp3',
+            'venice-beach-269483.mp3',
+            'whatever-it-takes-165616.mp3',
+         ];
+
+         let isFullScreen = false;
+
+         function enterFullScreen() {
+            const element = document.documentElement; // Use `document.documentElement` for the whole page, or replace with a specific element
+            if (element.requestFullscreen) {
+               element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+               // For Firefox
+               element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+               // For Chrome, Safari, and Edge
+               element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+               // For IE11
+               element.msRequestFullscreen();
+            }
+
+            isFullScreen = true;
+            $('#app-full-screen-button').text('Exit Fullscreen');
+         }
+
+         function exitFullScreen() {
+            if (document.exitFullscreen) {
+               document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+               // For Firefox
+               document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+               // For Chrome, Safari, and Edge
+               document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+               // For IE11
+               document.msExitFullscreen();
+            }
+
+            isFullScreen = false;
+            $('#app-full-screen-button').text('Go Fullscreen');
+         }
+
+         let audio = null;
+         let audioPlaying = false;
+
+         const getRandomAudioTrack = (arr) => {
+            if (arr.length === 0) return undefined;
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            return arr[randomIndex];
+         };
+
+         function initMusic(trackName) {
+            log.info('Initializing music');
+
+            log.debug(' >> Found ' + AUDIO_TRACKS.length + ' audio tracks!');
+
+            if (trackName == null) {
+               log.debug(' >> Selecting random audio track!');
+               trackName = getRandomAudioTrack(AUDIO_TRACKS);
+               log.debug(" >> Selected: '" + trackName + "'");
+            }
+
+            audio = document.createElement('audio');
+            audio.src = '/music/' + trackName;
+            // audio.loop = true; // Enable looping if needed
+            audio.volume = 0.4; // Set initial volume
+            document.body.appendChild(audio);
+
+            // Try to play the audio
+            audio
+               .play()
+               .then(() => {
+                  log.debug('Audio playing');
+                  $('#app-play-button').html('Mute Music');
+                  audioPlaying = true;
+               })
+               .catch((error) => {
+                  log.error('Failed to play audio');
+                  $('#app-play-button').html('Play Music');
+                  audioPlaying = false;
+               });
+
+            // Add music event handler
+            $('#app-play-button').on('click', () => {
+               if (audioPlaying) {
+                  audio.pause();
+                  $('#app-play-button').html('Play Music');
+                  audioPlaying = false;
+               } else {
+                  audio
+                     .play()
+                     .then(() => {
+                        log.debug('Audio playing');
+                        $('#app-play-button').html('Mute Music');
+                        audioPlaying = true;
+                     })
+                     .catch((error) => {
+                        log.error('Failed to play audio');
+                        $('#app-play-button').html('Play Music');
+                        audioPlaying = false;
+                     });
+               }
+            });
+
+            $('#app-next-track').on('click', () => {
+               log.info('Next audio track');
+               audio.pause();
+               trackName = getRandomAudioTrack(AUDIO_TRACKS);
+               audio.src = '/music/' + trackName;
+               audio
+                  .play()
+                  .then(() => {
+                     log.debug('Audio playing');
+                     $('#app-play-button').html('Mute Music');
+                     audioPlaying = true;
+                  })
+                  .catch((error) => {
+                     log.error('Failed to play audio');
+                     $('#app-play-button').html('Play Music');
+                     audioPlaying = false;
+                  });
+            });
+
+            audio.addEventListener('ended', () => {
+               log.info('Audio playback completed, loading a new track!');
+               trackName = getRandomAudioTrack(AUDIO_TRACKS);
+               audio.src = '/music/' + trackName;
+               audio
+                  .play()
+                  .then(() => {
+                     log.debug('Audio playing');
+                     $('#app-play-button').html('Mute Music');
+                     audioPlaying = true;
+                  })
+                  .catch((error) => {
+                     log.error('Failed to play audio');
+                     $('#app-play-button').html('Play Music');
+                     audioPlaying = false;
+                  });
+            });
+         }
+
+         function showUsernameFields() {
+            let ui = `
+               <div id="app-username-container">
+                  <b id="app-username-label" for="username">Enter a username:</b>
+                  <input id="app-username-input" type="text" name="username" placeholder="Username" />
+               </div>;
+            `;
+
+            $('body').append(ui);
+         }
+
+         $('document').ready(function () {
+            log.info('Loaded Web App Template HTML!');
+
+            // JxLogger.setOverrideLevel(JxLogger.DEBUG); // To debug!
+
+            JxLayout.initLayout({ south: false, west: false, east: false, panels: false });
+            JxLayout.hideWestPane();
+            JxLayout.hideEastPane();
+
+            initMusic();
+
+            $('#app-full-screen-button').on('click', () => {
+               log.info('Clicked full screen button');
+               if (isFullScreen) exitFullScreen();
+               else enterFullScreen();
+            });
+
+            showUsernameFields();
+         });
+      </script>
+   </head>
+
+   <body>
+      <div class="ui-layout-north">
+         <div id="ui-view-north" ui-view="north">
+            <div class="app-banner">
+               <img id="app-header-logo" src="images/banner.png" alt="Banner" />
+               <span id="app-header-version">Version: 1.0</span>
+            </div>
+
+            <div id="app-controls">
+               <button id="app-full-screen-button" class="app-button">Go Fullscreen</button>
+               <button id="app-play-button" class="app-button">Play Music</button>
+               <button id="app-next-track" class="app-button">Next Track</button>
+            </div>
+         </div>
+      </div>
+
+      <div class="ui-layout-center">
+         <div class="ui-layout-header">
+            <div id="ui-view-center-header" ui-view="center-header">Center Header</div>
+         </div>
+         <div class="ui-layout-content, app-center-content">
+            <div id="ui-view-center" ui-view="center"></div>
+         </div>
+         <div class="ui-layout-footer">Center Footer</div>
+      </div>
+
+      <div class="ui-layout-west">
+         <div class="ui-layout-header">West Header</div>
+         <div class="ui-layout-content">
+            <div id="ui-view-west" ui-view="west">West Content</div>
+         </div>
+         <div class="ui-layout-footer">West Footer</div>
+      </div>
+
+      <div class="ui-layout-east">
+         <div class="ui-layout-header">East Header</div>
+         <div class="ui-layout-content">
+            <div id="ui-view-east" ui-view="east">East Content</div>
+         </div>
+         <div class="ui-layout-footer">East Footer</div>
+      </div>
+
+      <div class="ui-layout-south">
+         <div id="ui-view-south" ui-view="south">
+            <div class="app-footer">
+               <span id="app-footer-text">Copyright (C) 2024 by Nuvoola AI. &nbsp;All Rights Reserved.</span>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

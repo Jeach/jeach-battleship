@@ -1,0 +1,19 @@
+{
+   "prettier.tabWidth": 3,
+   "prettier.useTabs": false,
+   "prettier.printWidth": 160,
+   "prettier.singleQuote": true,
+   "git.suggestSmartCommit": false,
+   "editor.formatOnSave": true,
+   "editor.rulers": [80, 100, 120, 140, 160],
+   "editor.wordWrap": "wordWrapColumn",
+   "editor.wordWrapColumn": 160,
+   "editor.cursorSurroundingLines": 3,
+   "editor.cursorSurroundingLinesStyle": "all",
+   "editor.acceptSuggestionOnEnter": "on", // off
+   "editor.inlineSuggest.showToolbar": "never",
+   "editor.inlineSuggest.suppressSuggestions": true,
+   "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+   }
+}
