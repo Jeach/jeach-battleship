@@ -76,6 +76,11 @@
       <script type="text/javascript">
          const log = JxLogger.getInstance('index.html', JxLogger.DEBUG);
 
+         /*
+          * TODO: Most of this code (if not all) will need to be put in it's
+          *       own JavaScript file. No code should be in HTML files!
+          */
+
          const AUDIO_TRACKS = [
             'jiglr-whisper-166871.mp3',
             'breaking-news-151090.mp3',
@@ -158,8 +163,9 @@
 
          const getRandomAudioTrack = (arr) => {
             if (arr.length === 0) return undefined;
-            const randomIndex = Math.floor(Math.random() * arr.length);
-            return arr[randomIndex];
+            const idx = Math.floor(Math.random() * arr.length);
+            log.debug(' >> Index: ' + idx);
+            return arr[idx];
          };
 
          function initMusic(trackName) {
@@ -258,10 +264,43 @@
                <div id="app-username-container">
                   <b id="app-username-label" for="username">Enter a username:</b>
                   <input id="app-username-input" type="text" name="username" placeholder="Username" />
+                  <p>
+                  <button id="app-next-button" class="app-button" disabled>Next</button>
                </div>;
             `;
 
             $('body').append(ui);
+         }
+
+         function setUsername(username) {
+            log.info('Save username to localstore');
+            if (username) {
+               let entry = JSON.stringify({ username: username, ts: Date.now() });
+               localStorage.setItem('username', entry);
+               log.debug(' >> Saved: ' + entry);
+            } else {
+               localStorage.removeItem('username');
+               log.debug(' >> Removed username entry!');
+            }
+         }
+
+         function getUsername() {
+            log.info('Get username from localstore');
+            let entry = localStorage.getItem('username');
+            log.debug(' >> Found: ' + entry);
+            let username = '';
+            if (entry) username = JSON.parse(entry).username;
+            log.debug(' >> Returning: ' + entry);
+            return username;
+         }
+
+         function restoreUsername() {
+            log.info('Restoring username');
+            let username = getUsername();
+            if (username) {
+               $('#app-username-input').val(username);
+               $('#app-username-input').trigger('input'); // Force validation!
+            }
          }
 
          $('document').ready(function () {
@@ -282,6 +321,80 @@
             });
 
             showUsernameFields();
+
+            $('body').on('blur', '#app-username-input', function (event) {
+               log.info("Username 'blur' event!");
+               log.debug(' >> Focus lost, trimming trailing whitespace!');
+               let value = $('#app-username-input').val();
+               value = value.trim();
+               $('#app-username-input').val(value);
+               setUsername(value);
+               $('#app-next-button').prop('disabled', value.length == 0);
+            });
+
+            $('body').on('input', '#app-username-input', function (event) {
+               log.info("Username 'input' event!");
+
+               let value = $('#app-username-input').val();
+
+               log.debug(" >> Value (start): '" + value + "'");
+
+               value = value.trimStart(); // Remove leading whitespaces!
+               value = value.replace(/\s+/g, ' '); // Remove duplicate spaces!
+
+               // NOTE: Allow trailing whitespaces since spaces are allowed!
+
+               // Ensure the first character is a letter
+               if (value.length > 0 && !/^[a-zA-Z]/.test(value[0])) {
+                  value = value.slice(1); // Remove first character if it's not a letter
+               }
+
+               // Ensure all characters are letters (a-z or A-Z)
+               // value = value.replace(/[^a-zA-Z]/g, ''); // Remove non-letter characters
+
+               log.debug(" >> Value (final): '" + value + "'");
+
+               // Set the new value back to the input
+               $('#app-username-input').val(value);
+
+               setUsername(value);
+               $('#app-next-button').prop('disabled', value.length == 0);
+            });
+
+            $('#app-next-button').on('click', () => {
+               log.info('Next button clicked');
+            });
+
+            $('body').on('keydown', '#app-username-container', function (event) {
+               // return; // for now!
+               log.info("Username 'keydown' event!");
+
+               const allowKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-! ';
+               const ctrlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Home', 'End', 'Enter'];
+
+               const key = event.key;
+               const code = event.keyCode;
+
+               log.debug(' >> Key: ' + key + ' (keycode: ' + code + ')');
+
+               // Allow valid characters, functional keys, and Shift+Home/Shift+End combinations
+               if (allowKeys.includes(key) || ctrlKeys.includes(key) || (event.shiftKey && (key === 'Home' || key === 'End'))) {
+                  log.debug(' >> key is allowed!');
+
+                  if (event.key === 'Enter') {
+                     log.debug(' >> ENTER pressed, losing focus!');
+                     $('#app-username-input').blur();
+                  }
+
+                  return; // Allow the key press
+               }
+
+               log.debug(' >> key is rejected!');
+
+               event.preventDefault(); // Block all other inputs
+            });
+
+            restoreUsername();
          });
       </script>
    </head>

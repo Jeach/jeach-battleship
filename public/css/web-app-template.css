@@ -162,6 +162,20 @@ html {
    background-color: #0056b3;
 }
 
+.app-button:disabled {
+   background-color: #afaeae; /* Light grey background */
+   color: #777777; /* Darker grey text */
+   border: 1px solid #535353; /* Grey border */
+   cursor: not-allowed; /* Change cursor to show it's not clickable */
+}
+
+.app-button:disabled:hover {
+   background-color: #afaeae; /* Light grey background */
+   color: #777777; /* Darker grey text */
+   border: 1px solid #535353; /* Grey border */
+   cursor: not-allowed; /* Change cursor to show it's not clickable */
+}
+
 /*--------------------------------------------------------------------------
   Game panel
 --------------------------------------------------------------------------*/
@@ -173,14 +187,16 @@ html {
 }
 
 #app-username-container {
-   position: absolute;
-   top: 40%;
-   left: 40%;
-   width: 300px;
-   padding: 30px;
-   /* padding-right: 50px; */
+   position: relative;
+   top: 45%;
+   width: 50%;
+   max-width: 300px;
+   min-width: 200px;
+   margin: 0 auto;
+   padding: 25px;
+   padding-bottom: 10px;
    border-radius: 8px;
-   border: 2px solid rgb(2, 13, 109);
+   border: 3px solid rgb(2, 13, 109);
    background-color: rgba(100, 100, 100, 0.35);
 }
 
@@ -194,8 +210,21 @@ html {
 #app-username-input {
    padding: 10px;
    font-size: 16px;
-   width: 90%;
-   max-width: 300px;
+   width: 93%;
+   /* max-width: 300px; */
    border: 1px solid #ccc;
    border-radius: 4px;
+   background-color: rgb(128, 128, 128, 0.35);
+   outline: none;
+   color: rgb(0, 0, 200);
+   font-weight: bold;
+}
+
+#app-username-input:focus {
+   background-color: rgb(128, 128, 128, 0.75);
+}
+
+#app-username-input::placeholder {
+   font-weight: bold;
+   color: rgb(60, 60, 100);
 }
