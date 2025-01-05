@@ -1,19 +1,52 @@
-Copyright (C) 2024 Christian Jean.
-All rights reserved.
+This project is licensed under the MIT License.
 
-CONFIDENTIAL AND PROPRIETARY INFORMATION!
+Copyright (C) 2024 Christian Jean. All rights reserved under copyright law,
+except as provided by the MIT License.
 
-Disclosure or use in part or in whole without prior written consent
-constitutes an infringement of copyright laws which may be punishable
-by law.
+---
 
-THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES
-INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
-THE LICENSOR OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Essence of the MIT License
+
+The MIT License is a permissive open-source software license that is simple and
+developer-friendly. Its essence lies in granting users broad freedoms while
+imposing minimal obligations.
+
+Below is an overview of the rights and obligations associated with the
+MIT License:
+
+1. Rights Granted by the MIT License
+
+   a) Freedom to Use - You can use the licensed software for any purpose,
+   including commercial, educational, or private use.
+
+   b) Freedom to Copy - You are allowed to copy and redistribute the
+   software in its original form or modified versions.
+
+   c) Freedom to Modify - You can alter the software to suit your needs, fix
+   bugs, or enhance its functionality.
+
+   d) Freedom to Distribute - You can distribute the original or modified
+   versions of the software, either free of charge or for a fee.
+
+2. Obligations Under the MIT License
+
+   a) Include the License - You must include a copy of the original License
+   text (this file) in any distributed copy of the software, whether original
+   or modified.
+
+   b) Maintain Copyright Notice - The copyright notice of the original
+   author(s) must remain intact in the source code or any distribution of the
+   software.
+
+   c) No Warranty - The license explicitly states that the software is
+   provided "as-is" without any warranty, and the authors are not liable for
+   any damages that may arise from using the software.
+
+3. Key Features of the MIT License
+
+   a) Minimal Restrictions - Unlike more restrictive licenses (ie: GPL), the
+   MIT License does not require derivative works or modifications to be
+   licensed under the same terms.
+
+   b) Flexibility - It allows for integration into proprietary projects, making
+   it widely used in both open-source and commercial software development.

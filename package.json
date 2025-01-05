@@ -4,7 +4,7 @@
    "description": "A simple multi-player battleship game",
    "author": "Christian Jean",
    "main": "server.js",
-   "license": "See 'LICENSE' file",
+   "license": "MIT License (see 'LICENSE' file)",
    "scripts": {
       "start": "node server.js"
    },
