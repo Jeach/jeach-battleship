@@ -9,8 +9,9 @@
       "start": "node server.js"
    },
    "keywords": [
-      "nuvoola",
-      "luke"
+      "jeach",
+      "battleship",
+      "jeach-battleship"
    ],
    "dependencies": {
       "cors": "^2.8.5",
