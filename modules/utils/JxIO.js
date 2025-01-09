@@ -41,7 +41,7 @@ var JxIO = (function () {
    //-------------------------------------------------------------------
 
    const MODULE_NAME = 'JxIO';
-   const MODULE_VERSION = '1.7.0';
+   const MODULE_VERSION = '1.8.0';
 
    const MODULE_HASHCODE = generateRandomHashcode();
 
@@ -1025,10 +1025,20 @@ var JxIO = (function () {
 
    /**
     * Will save the data to the specified file.
+    *
+    * If the 'json' argument is an Object, it will be converted to JSON
+    * prior to being saved.
+    *
+    * @param {String} path of the file to save to.
+    * @param {JSON|Object} json data (as a String or Object).
     */
    function saveJsonToFile(path, json) {
       log.info('Writing to file');
       log.debug(" >> Path: '" + path + "'");
+      if (JxValidate.isObject(json)) {
+         log.debug(' >> Converting to JSON string');
+         json = JSON.stringify(json, null, 3);
+      }
       fs.writeFileSync(path, json, 'utf-8');
       log.debug('Wrote file image');
    }

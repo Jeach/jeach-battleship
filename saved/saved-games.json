@@ -1,0 +1,87 @@
+{
+   "created": 1736099604454,
+   "games": [
+      {
+         "id": "0e22408b-1111-461d-97f4-5db6008ac86b",
+         "created": 1736089604454,
+         "username": "Jeach",
+         "status": "waiting",
+         "mode": "public",
+         "players": [
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Alex"
+            }
+         ]
+      },
+      {
+         "id": "0e22408b-1111-461d-97f4-5db6008ac86b",
+         "created": 1736079604454,
+         "username": "Alex",
+         "status": "waiting",
+         "mode": "public",
+         "players": [
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Alex"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Jeach"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Liam"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Loukas"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "computer",
+               "username": "R2D2"
+            }
+         ]
+      },
+      {
+         "id": "ef44408b-1111-461d-97f4-5db6008ac86b",
+         "created": 1736069604454,
+         "username": "Loukas",
+         "status": "playing",
+         "mode": "private",
+         "players": [
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Alex"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Jeach"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "human",
+               "username": "Liam"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "computer",
+               "username": "Al"
+            },
+            {
+               "id": "866f879a-fab7-49ba-98af-b2560d0f3552",
+               "type": "computer",
+               "username": "R2D2"
+            }
+         ]
+      }
+   ]
+}

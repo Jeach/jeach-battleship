@@ -10,6 +10,8 @@ Both my sons, at the early age of 4 and 5, loved the game of battleship. But lac
 
 Created project on December 30th, 2024, and will be committing periodically until a core game has been created. Intend to add features with time.
 
+Current priority is to get something up as quickly as possible. Once we have a working version, refactoring will be required to clean things up.
+
 ## Project License and Copyright
 
 This project is licensed under the **MIT License** and is **Copyright (C) 2024 Christian Jean**. All rights reserved under copyright law, except as provided by the MIT License.
@@ -60,7 +62,7 @@ MIT License:
    b) **Flexibility** - It allows for integration into proprietary projects, making
    it widely used in both open-source and commercial software development.
 
-## Music
+## Music Rights
 
 All audio tracks and instrumentals are provided royalty-free and are free to use. We extend our gratitude to the following providers:
 

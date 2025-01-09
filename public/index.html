@@ -259,7 +259,7 @@
             });
          }
 
-         function showUsernameFields() {
+         function showUsernamePanel() {
             let ui = `
                <div id="app-username-container">
                   <b id="app-username-label" for="username">Enter a username:</b>
@@ -270,6 +270,120 @@
             `;
 
             $('body').append(ui);
+         }
+
+         function hideUsernamePanel() {
+            $('#app-username-container').remove();
+         }
+
+         function showErrorPanel(header, message) {
+            let ui = `
+               <div id="app-error-container">
+                  <b id="app-error-label" for="username">Error!</b>
+                  <p>
+                  <div id="app-error-message"></div>
+               </div>;
+            `;
+
+            $('body').append(ui);
+
+            if (header) $('#app-error-label').html(header);
+            if (message) $('#app-error-message').html(message);
+         }
+
+         function hideErrorPanel() {
+            $('#app-error-container').remove();
+         }
+
+         function showGamesPanel(data) {
+            let ui = `
+               <div id="app-games-container">
+                  <b id="app-games-label">Showing Active Games</b>
+                  <p>
+                  <div id="app-games-list"></div>
+               </div>;
+            `;
+
+            JxLayout.appendContent('center', ui);
+
+            if (data && data.games) {
+               log.debug(' >> Listing games');
+
+               for (let i = 0; i < 10; i++) {
+                  data.games.push(data.games[0]); // Clone data!
+               }
+
+               let count = data.games.length;
+
+               if (count == 0) {
+                  $('#app-games-label').html(`
+                     <b class="app-game-link app-game-create-link">Create New Game</b>
+                   `);
+
+                  $('#app-games-list').html(`
+                     No active games currently exist!
+                     <p>
+                     <button id="app-create-game" class="app-button">New Game</button>
+                     `);
+               }
+
+               if (count > 0) {
+                  $('#app-games-label').html(`
+                        Showing ${count} Active Games
+                        <b class="app-game-link app-game-create-link">Create New Game</b>
+                     `);
+
+                  data.games.forEach((game) => {
+                     let humans = game.players.reduce((result, player, idx, array) => {
+                        if (player.type === 'human') return result + 1;
+                        else return result;
+                     }, 0);
+
+                     let players = humans + ' human' + (humans == 1 ? '' : 's'); // Stringify
+
+                     let computers = game.players.reduce((result, player, idx, array) => {
+                        if (player.type === 'computer') return result + 1;
+                        else return result;
+                     }, 0);
+
+                     if (computers > 0) players = players + ', ' + computers + ' computer' + (computers == 1 ? '' : 's'); // Stringify
+
+                     $('#app-games-list').append(`
+                        <div id='app-game-item'>
+                           <span class="app-game-item-label">Created:</span>
+                           <span class="app-game-item-value">${moment(game.created).fromNow()}</span>
+
+                           <span class="app-game-item-label">By:</span>
+                           <span class="app-game-item-value">${game.username}</span>
+
+                           <span class="app-game-item-label">Status:</span>
+                           <span class="app-game-item-value">${game.status}</span>
+
+                           <span class="app-game-item-label">Mode:</span>
+                           <span class="app-game-item-value">${game.mode}</span>
+
+                           <span class="app-game-item-label">Players:</span>
+                           <span class="app-game-item-value">${players}</span>
+
+                           <b id="${game.id}" class="app-game-link app-game-join-link">Join</b>
+                        <div>
+                     `);
+                  });
+               }
+            } else {
+               log.warn(' >> No game data found!');
+               $('#app-games-list').html('<b>Warning</b>: No game data could be found!');
+            }
+         }
+
+         function hideGamesPanel() {
+            $('#app-games-container').remove();
+         }
+
+         function hideAllPanels() {
+            hideUsernamePanel();
+            hideErrorPanel();
+            hideGamesPanel();
          }
 
          function setUsername(username) {
@@ -306,9 +420,12 @@
          $('document').ready(function () {
             log.info('Loaded Web App Template HTML!');
 
+            let GAMES = null;
+
             // JxLogger.setOverrideLevel(JxLogger.DEBUG); // To debug!
 
             JxLayout.initLayout({ south: false, west: false, east: false, panels: false });
+
             JxLayout.hideWestPane();
             JxLayout.hideEastPane();
 
@@ -320,7 +437,7 @@
                else enterFullScreen();
             });
 
-            showUsernameFields();
+            showUsernamePanel();
 
             $('body').on('blur', '#app-username-input', function (event) {
                log.info("Username 'blur' event!");
@@ -363,6 +480,29 @@
 
             $('#app-next-button').on('click', () => {
                log.info('Next button clicked');
+
+               var jqxhr = $.get('/api/v1/battleship/games', function (data) {
+                  log.debug(' >> Status : ', data);
+                  GAMES = data.payload.success.games;
+                  log.debug(' >> Games  : ', GAMES);
+                  hideAllPanels();
+                  showGamesPanel(GAMES);
+               }).fail(function (xhr, textStatus, errorThrown) {
+                  log.error(' >> Could not get available games!');
+                  hideAllPanels();
+                  let json = JSON.parse(xhr.responseText);
+                  let errors = json.payload.error.join(' ');
+                  let message = `
+                     <b>Description:</b> ${json.http.description}<p>
+                     <b>Details</b>: ${errors}
+                  `;
+                  showErrorPanel(`HTTP-${json.http.status}`, message);
+               });
+            });
+
+            $('body').on('click', '#app-create-game', () => {
+               log.info('Create a new game button clicked');
+               hideAllPanels();
             });
 
             $('body').on('keydown', '#app-username-container', function (event) {
@@ -392,6 +532,16 @@
                log.debug(' >> key is rejected!');
 
                event.preventDefault(); // Block all other inputs
+            });
+
+            $('body').on('click', '.app-game-create-link', () => {
+               log.info('Create a new game link clicked');
+            });
+
+            $('body').on('click', '.app-game-join-link', function () {
+               log.info('Join a game link clicked');
+               let id = $(this).attr('id');
+               log.debug(' >> ID: ' + id);
             });
 
             restoreUsername();

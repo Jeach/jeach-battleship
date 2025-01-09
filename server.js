@@ -93,6 +93,9 @@ if (HTTP_REQUEST_LOGGER) {
 const serviceRoutes = require('./routes/service-routes');
 app.use('/api/v1', serviceRoutes);
 
+const gameRoutes = require('./routes/game-routes');
+app.use('/api/v1', gameRoutes);
+
 //----------------------------------------------------------------------------
 // Default HTTP 404 (for everything else)...
 //----------------------------------------------------------------------------
@@ -117,5 +120,6 @@ server.listen(SERVICE_PORT, () => {
    log.print('You may now use the following links:');
    log.print(' >> API Version : http://localhost/api/v1/service/version');
    log.print(' >> Web App     : http://localhost/');
+   log.print(' >> Web App     : http://localhost/api/v1/battleship/games');
    log.print();
 });
