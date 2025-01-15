@@ -22,170 +22,211 @@
 
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>Web App Template</title>
 
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+   <title>Web App Template</title>
 
-      <meta name="author" content="Christian Jean" />
-      <meta name="description" content="Web Application Template" />
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <meta http-equiv="Cache-Control" content="max-age=0" />
-      <meta http-equiv="Cache-Control" content="no-cache" />
-      <meta http-equiv="Expires" content="0" />
-      <meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-      <meta http-equiv="Pragma" content="no-cache" />
+   <meta name="author" content="Christian Jean" />
+   <meta name="description" content="Web Application Template" />
 
-      <link rel="icon" href="/images/favicon.png" />
+   <meta http-equiv="Cache-Control" content="max-age=0" />
+   <meta http-equiv="Cache-Control" content="no-cache" />
+   <meta http-equiv="Expires" content="0" />
+   <meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+   <meta http-equiv="Pragma" content="no-cache" />
 
-      <!-- Third party CSS -->
-      <link rel="stylesheet" href="/css/ext/jquery-layout-1.4.3.css" />
-      <link rel="stylesheet" href="/css/ext/jquery-dataTables.min.css" />
-      <link rel="stylesheet" href="/css/ext/jquery-ui-1.13.2.css" />
+   <link rel="icon" href="/images/favicon.png" />
 
-      <link rel="stylesheet" href="/css/ext/font-awesome.min.css" />
+   <!-- Third party CSS -->
+   <link rel="stylesheet" href="/css/ext/jquery-layout-1.4.3.css" />
+   <link rel="stylesheet" href="/css/ext/jquery-dataTables.min.css" />
+   <link rel="stylesheet" href="/css/ext/jquery-ui-1.13.2.css" />
 
-      <!-- Domain specific CSS -->
-      <link rel="stylesheet" href="/css/web-app-template.css" />
+   <link rel="stylesheet" href="/css/ext/font-awesome.min.css" />
 
-      <!-- Third party JS libraries -->
-      <script src="/js/ext/jquery-2.0.3.min.js"></script>
-      <script src="/js/ext/jquery-layout.min-1.4.3.js"></script>
-      <script src="/js/ext/jquery-ui-1.12.1.min.js"></script>
-      <script src="/js/ext/jquery-dataTables.min.js"></script>
+   <!-- Domain specific CSS -->
+   <link rel="stylesheet" href="/css/web-app-template.css" />
 
-      <script src="/js/ext/socket.io.min.js"></script>
-      <script src="/js/ext/mousetrap.min.js"></script>
-      <script src="/js/ext/sha1-0.6.0.min.js"></script>
+   <!-- Third party JS libraries -->
+   <script src="/js/ext/jquery-2.0.3.min.js"></script>
+   <script src="/js/ext/jquery-layout.min-1.4.3.js"></script>
+   <script src="/js/ext/jquery-ui-1.12.1.min.js"></script>
+   <script src="/js/ext/jquery-dataTables.min.js"></script>
 
-      <script src="/js/ext/moment.min-2.27.0.js"></script>
-      <script src="/js/ext/moment-locals.min-2.27.0.js"></script>
+   <script src="/js/ext/socket.io.min.js"></script>
+   <script src="/js/ext/mousetrap.min.js"></script>
+   <script src="/js/ext/sha1-0.6.0.min.js"></script>
 
-      <!-- Proprietary JS libraries -->
-      <script src="/js/JxLogger.js"></script>
-      <script src="/js/JxValidate.js"></script>
-      <script src="/js/JxLayout.js"></script>
-      <script src="/js/JxWebSocket.js"></script>
-      <script src="/js/JxToolbox.js"></script>
-      <script src="/js/JxLoremIpsum.js"></script>
+   <script src="/js/ext/moment.min-2.27.0.js"></script>
+   <script src="/js/ext/moment-locals.min-2.27.0.js"></script>
 
-      <!-- Domain specific JS libraries -->
-      <script src="/js/WebAppTemplate.js"></script>
+   <!-- Proprietary JS libraries -->
+   <script src="/js/JxLogger.js"></script>
+   <script src="/js/JxValidate.js"></script>
+   <script src="/js/JxLayout.js"></script>
+   <script src="/js/JxWebSocket.js"></script>
+   <script src="/js/JxToolbox.js"></script>
+   <script src="/js/JxLoremIpsum.js"></script>
 
-      <script type="text/javascript">
-         const log = JxLogger.getInstance('index.html', JxLogger.DEBUG);
+   <!-- Domain specific JS libraries -->
+   <script src="/js/WebAppTemplate.js"></script>
 
-         /*
-          * TODO: Most of this code (if not all) will need to be put in it's
-          *       own JavaScript file. No code should be in HTML files!
-          */
+   <script type="text/javascript">
+      const log = JxLogger.getInstance('index.html', JxLogger.DEBUG);
 
-         const AUDIO_TRACKS = [
-            'jiglr-whisper-166871.mp3',
-            'breaking-news-151090.mp3',
-            'extreme-sport-driving-157970.mp3',
-            'and-so-it-begins-196638.mp3',
-            'ascend-261733.mp3',
-            'cap-keysi-remix-by-aap-featuring-5ocrates-123687.mp3',
-            'chosen-one-178816.mp3',
-            'cyberpunk-150207.mp3',
-            'decisive-race-154402.mp3',
-            'digital-adrenaline-159491.mp3',
-            'discipline-174789.mp3',
-            'dramatic-hi-tech-109538.mp3',
-            'drive-breakbeat-173062.mp3',
-            'gaining-speed-154423.mp3',
-            'heavy-racing-151129.mp3',
-            'highway-trap-hip-hop-music-191909.mp3',
-            'jiglr-gang-166873.mp3',
-            'jirian-catch-me-122910.mp3',
-            'like-a-boss-136519.mp3',
-            'metal-gear-136567.mp3',
-            'moment-on-the-show-drill-cinematic-beat-174666.mp3',
-            'near-danger-10375.mp3',
-            'power-action-drive-173502.mp3',
-            'power-drive-rock-2-versions-165548.mp3',
-            'ready-for-takeoff-151528.mp3',
-            'retro-games-glitch-technology-synthwave-199939.mp3',
-            'savage-4-version-154878.mp3',
-            'sport-extreme-dubstep-dance-160020.mp3',
-            'stomp-and-claps-141690.mp3',
-            'summer-inspiring-dubstep-154614.mp3',
-            'synthwave-retrowave-sythpop-121540.mp3',
-            'traveling-memories-technology-future-synthwave-199941.mp3',
-            'urban-night-151632.mp3',
-            'venice-beach-269483.mp3',
-            'whatever-it-takes-165616.mp3',
-         ];
+      /*
+       * TODO: Most of this code (if not all) will need to be put in it's
+       *       own JavaScript file. No code should be in HTML files!
+       */
 
-         let isFullScreen = false;
+      const AUDIO_TRACKS = [
+         'jiglr-whisper-166871.mp3',
+         'breaking-news-151090.mp3',
+         'extreme-sport-driving-157970.mp3',
+         'and-so-it-begins-196638.mp3',
+         'ascend-261733.mp3',
+         'cap-keysi-remix-by-aap-featuring-5ocrates-123687.mp3',
+         'chosen-one-178816.mp3',
+         'cyberpunk-150207.mp3',
+         'decisive-race-154402.mp3',
+         'digital-adrenaline-159491.mp3',
+         'discipline-174789.mp3',
+         'dramatic-hi-tech-109538.mp3',
+         'drive-breakbeat-173062.mp3',
+         'gaining-speed-154423.mp3',
+         'heavy-racing-151129.mp3',
+         'highway-trap-hip-hop-music-191909.mp3',
+         'jiglr-gang-166873.mp3',
+         'jirian-catch-me-122910.mp3',
+         'like-a-boss-136519.mp3',
+         'metal-gear-136567.mp3',
+         'moment-on-the-show-drill-cinematic-beat-174666.mp3',
+         'near-danger-10375.mp3',
+         'power-action-drive-173502.mp3',
+         'power-drive-rock-2-versions-165548.mp3',
+         'ready-for-takeoff-151528.mp3',
+         'retro-games-glitch-technology-synthwave-199939.mp3',
+         'savage-4-version-154878.mp3',
+         'sport-extreme-dubstep-dance-160020.mp3',
+         'stomp-and-claps-141690.mp3',
+         'summer-inspiring-dubstep-154614.mp3',
+         'synthwave-retrowave-sythpop-121540.mp3',
+         'traveling-memories-technology-future-synthwave-199941.mp3',
+         'urban-night-151632.mp3',
+         'venice-beach-269483.mp3',
+         'whatever-it-takes-165616.mp3',
+      ];
 
-         function enterFullScreen() {
-            const element = document.documentElement; // Use `document.documentElement` for the whole page, or replace with a specific element
-            if (element.requestFullscreen) {
-               element.requestFullscreen();
-            } else if (element.mozRequestFullScreen) {
-               // For Firefox
-               element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) {
-               // For Chrome, Safari, and Edge
-               element.webkitRequestFullscreen();
-            } else if (element.msRequestFullscreen) {
-               // For IE11
-               element.msRequestFullscreen();
-            }
+      let isFullScreen = false;
 
-            isFullScreen = true;
-            $('#app-full-screen-button').text('Exit Fullscreen');
+      function enterFullScreen() {
+         const element = document.documentElement; // Use `document.documentElement` for the whole page, or replace with a specific element
+         if (element.requestFullscreen) {
+            element.requestFullscreen();
+         } else if (element.mozRequestFullScreen) {
+            // For Firefox
+            element.mozRequestFullScreen();
+         } else if (element.webkitRequestFullscreen) {
+            // For Chrome, Safari, and Edge
+            element.webkitRequestFullscreen();
+         } else if (element.msRequestFullscreen) {
+            // For IE11
+            element.msRequestFullscreen();
          }
 
-         function exitFullScreen() {
-            if (document.exitFullscreen) {
-               document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-               // For Firefox
-               document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-               // For Chrome, Safari, and Edge
-               document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-               // For IE11
-               document.msExitFullscreen();
-            }
+         isFullScreen = true;
+         $('#app-full-screen-button').text('Exit Fullscreen');
+      }
 
-            isFullScreen = false;
-            $('#app-full-screen-button').text('Go Fullscreen');
+      function exitFullScreen() {
+         if (document.exitFullscreen) {
+            document.exitFullscreen();
+         } else if (document.mozCancelFullScreen) {
+            // For Firefox
+            document.mozCancelFullScreen();
+         } else if (document.webkitExitFullscreen) {
+            // For Chrome, Safari, and Edge
+            document.webkitExitFullscreen();
+         } else if (document.msExitFullscreen) {
+            // For IE11
+            document.msExitFullscreen();
          }
 
-         let audio = null;
-         let audioPlaying = false;
+         isFullScreen = false;
+         $('#app-full-screen-button').text('Go Fullscreen');
+      }
 
-         const getRandomAudioTrack = (arr) => {
-            if (arr.length === 0) return undefined;
-            const idx = Math.floor(Math.random() * arr.length);
-            log.debug(' >> Index: ' + idx);
-            return arr[idx];
-         };
+      let audio = null;
+      let audioPlaying = false;
 
-         function initMusic(trackName) {
-            log.info('Initializing music');
+      const getRandomAudioTrack = (arr) => {
+         if (arr.length === 0) return undefined;
+         const idx = Math.floor(Math.random() * arr.length);
+         log.debug(' >> Index: ' + idx);
+         return arr[idx];
+      };
 
-            log.debug(' >> Found ' + AUDIO_TRACKS.length + ' audio tracks!');
+      function initMusic(trackName) {
+         log.info('Initializing music');
 
-            if (trackName == null) {
-               log.debug(' >> Selecting random audio track!');
-               trackName = getRandomAudioTrack(AUDIO_TRACKS);
-               log.debug(" >> Selected: '" + trackName + "'");
+         log.debug(' >> Found ' + AUDIO_TRACKS.length + ' audio tracks!');
+
+         if (trackName == null) {
+            log.debug(' >> Selecting random audio track!');
+            trackName = getRandomAudioTrack(AUDIO_TRACKS);
+            log.debug(" >> Selected: '" + trackName + "'");
+         }
+
+         audio = document.createElement('audio');
+         audio.src = '/music/' + trackName;
+         // audio.loop = true; // Enable looping if needed
+         audio.volume = 0.4; // Set initial volume
+         document.body.appendChild(audio);
+
+         // Try to play the audio
+         audio
+            .play()
+            .then(() => {
+               log.debug('Audio playing');
+               $('#app-play-button').html('Mute Music');
+               audioPlaying = true;
+            })
+            .catch((error) => {
+               log.error('Failed to play audio');
+               $('#app-play-button').html('Play Music');
+               audioPlaying = false;
+            });
+
+         // Add music event handler
+         $('#app-play-button').on('click', () => {
+            if (audioPlaying) {
+               audio.pause();
+               $('#app-play-button').html('Play Music');
+               audioPlaying = false;
+            } else {
+               audio
+                  .play()
+                  .then(() => {
+                     log.debug('Audio playing');
+                     $('#app-play-button').html('Mute Music');
+                     audioPlaying = true;
+                  })
+                  .catch((error) => {
+                     log.error('Failed to play audio');
+                     $('#app-play-button').html('Play Music');
+                     audioPlaying = false;
+                  });
             }
+         });
 
-            audio = document.createElement('audio');
+         $('#app-next-track').on('click', () => {
+            log.info('Next audio track');
+            audio.pause();
+            trackName = getRandomAudioTrack(AUDIO_TRACKS);
             audio.src = '/music/' + trackName;
-            // audio.loop = true; // Enable looping if needed
-            audio.volume = 0.4; // Set initial volume
-            document.body.appendChild(audio);
-
-            // Try to play the audio
             audio
                .play()
                .then(() => {
@@ -198,69 +239,29 @@
                   $('#app-play-button').html('Play Music');
                   audioPlaying = false;
                });
+         });
 
-            // Add music event handler
-            $('#app-play-button').on('click', () => {
-               if (audioPlaying) {
-                  audio.pause();
+         audio.addEventListener('ended', () => {
+            log.info('Audio playback completed, loading a new track!');
+            trackName = getRandomAudioTrack(AUDIO_TRACKS);
+            audio.src = '/music/' + trackName;
+            audio
+               .play()
+               .then(() => {
+                  log.debug('Audio playing');
+                  $('#app-play-button').html('Mute Music');
+                  audioPlaying = true;
+               })
+               .catch((error) => {
+                  log.error('Failed to play audio');
                   $('#app-play-button').html('Play Music');
                   audioPlaying = false;
-               } else {
-                  audio
-                     .play()
-                     .then(() => {
-                        log.debug('Audio playing');
-                        $('#app-play-button').html('Mute Music');
-                        audioPlaying = true;
-                     })
-                     .catch((error) => {
-                        log.error('Failed to play audio');
-                        $('#app-play-button').html('Play Music');
-                        audioPlaying = false;
-                     });
-               }
-            });
+               });
+         });
+      }
 
-            $('#app-next-track').on('click', () => {
-               log.info('Next audio track');
-               audio.pause();
-               trackName = getRandomAudioTrack(AUDIO_TRACKS);
-               audio.src = '/music/' + trackName;
-               audio
-                  .play()
-                  .then(() => {
-                     log.debug('Audio playing');
-                     $('#app-play-button').html('Mute Music');
-                     audioPlaying = true;
-                  })
-                  .catch((error) => {
-                     log.error('Failed to play audio');
-                     $('#app-play-button').html('Play Music');
-                     audioPlaying = false;
-                  });
-            });
-
-            audio.addEventListener('ended', () => {
-               log.info('Audio playback completed, loading a new track!');
-               trackName = getRandomAudioTrack(AUDIO_TRACKS);
-               audio.src = '/music/' + trackName;
-               audio
-                  .play()
-                  .then(() => {
-                     log.debug('Audio playing');
-                     $('#app-play-button').html('Mute Music');
-                     audioPlaying = true;
-                  })
-                  .catch((error) => {
-                     log.error('Failed to play audio');
-                     $('#app-play-button').html('Play Music');
-                     audioPlaying = false;
-                  });
-            });
-         }
-
-         function showUsernamePanel() {
-            let ui = `
+      function showUsernamePanel() {
+         let ui = `
                <div id="app-username-container">
                   <b id="app-username-label" for="username">Enter a username:</b>
                   <input id="app-username-input" type="text" name="username" placeholder="Username" />
@@ -269,15 +270,15 @@
                </div>;
             `;
 
-            $('body').append(ui);
-         }
+         $('body').append(ui);
+      }
 
-         function hideUsernamePanel() {
-            $('#app-username-container').remove();
-         }
+      function hideUsernamePanel() {
+         $('#app-username-container').remove();
+      }
 
-         function showErrorPanel(header, message) {
-            let ui = `
+      function showErrorPanel(header, message) {
+         let ui = `
                <div id="app-error-container">
                   <b id="app-error-label" for="username">Error!</b>
                   <p>
@@ -285,18 +286,18 @@
                </div>;
             `;
 
-            $('body').append(ui);
+         $('body').append(ui);
 
-            if (header) $('#app-error-label').html(header);
-            if (message) $('#app-error-message').html(message);
-         }
+         if (header) $('#app-error-label').html(header);
+         if (message) $('#app-error-message').html(message);
+      }
 
-         function hideErrorPanel() {
-            $('#app-error-container').remove();
-         }
+      function hideErrorPanel() {
+         $('#app-error-container').remove();
+      }
 
-         function showGamesPanel(data) {
-            let ui = `
+      function showGamesPanel(data) {
+         let ui = `
                <div id="app-games-container">
                   <b id="app-games-label">Showing Active Games</b>
                   <p>
@@ -304,51 +305,51 @@
                </div>;
             `;
 
-            JxLayout.appendContent('center', ui);
+         JxLayout.appendContent('center', ui);
 
-            if (data && data.games) {
-               log.debug(' >> Listing games');
+         if (data && data.games) {
+            log.debug(' >> Listing games');
 
-               for (let i = 0; i < 10; i++) {
-                  data.games.push(data.games[0]); // Clone data!
-               }
+            for (let i = 0; i < 10; i++) {
+               data.games.push(data.games[0]); // Clone data!
+            }
 
-               let count = data.games.length;
+            let count = data.games.length;
 
-               if (count == 0) {
-                  $('#app-games-label').html(`
+            if (count == 0) {
+               $('#app-games-label').html(`
                      <b class="app-game-link app-game-create-link">Create New Game</b>
                    `);
 
-                  $('#app-games-list').html(`
+               $('#app-games-list').html(`
                      No active games currently exist!
                      <p>
                      <button id="app-create-game" class="app-button">New Game</button>
                      `);
-               }
+            }
 
-               if (count > 0) {
-                  $('#app-games-label').html(`
+            if (count > 0) {
+               $('#app-games-label').html(`
                         Showing ${count} Active Games
                         <b class="app-game-link app-game-create-link">Create New Game</b>
                      `);
 
-                  data.games.forEach((game) => {
-                     let humans = game.players.reduce((result, player, idx, array) => {
-                        if (player.type === 'human') return result + 1;
-                        else return result;
-                     }, 0);
+               data.games.forEach((game) => {
+                  let humans = game.players.reduce((result, player, idx, array) => {
+                     if (player.type === 'human') return result + 1;
+                     else return result;
+                  }, 0);
 
-                     let players = humans + ' human' + (humans == 1 ? '' : 's'); // Stringify
+                  let players = humans + ' human' + (humans == 1 ? '' : 's'); // Stringify
 
-                     let computers = game.players.reduce((result, player, idx, array) => {
-                        if (player.type === 'computer') return result + 1;
-                        else return result;
-                     }, 0);
+                  let computers = game.players.reduce((result, player, idx, array) => {
+                     if (player.type === 'computer') return result + 1;
+                     else return result;
+                  }, 0);
 
-                     if (computers > 0) players = players + ', ' + computers + ' computer' + (computers == 1 ? '' : 's'); // Stringify
+                  if (computers > 0) players = players + ', ' + computers + ' computer' + (computers == 1 ? '' : 's'); // Stringify
 
-                     $('#app-games-list').append(`
+                  $('#app-games-list').append(`
                         <div id='app-game-item'>
                            <span class="app-game-item-label">Created:</span>
                            <span class="app-game-item-value">${moment(game.created).fromNow()}</span>
@@ -368,235 +369,350 @@
                            <b id="${game.id}" class="app-game-link app-game-join-link">Join</b>
                         <div>
                      `);
-                  });
-               }
-            } else {
-               log.warn(' >> No game data found!');
-               $('#app-games-list').html('<b>Warning</b>: No game data could be found!');
+               });
             }
+         } else {
+            log.warn(' >> No game data found!');
+            $('#app-games-list').html('<b>Warning</b>: No game data could be found!');
          }
+      }
 
-         function hideGamesPanel() {
-            $('#app-games-container').remove();
+      /**
+       * Game Settings:
+       * 
+       *    o Game acces:
+       *       - Private game (password protected)
+       *       - Public game
+       *    o Game board size (6x6, 8x8, 10x10, 12x12, 14x14, 16x16, etc.)
+       *    o Number of players (1 to 8)
+       *       - Number of human players
+       *       - Number of AI players
+       *    o Turn management:
+       *       - Turn-based (round-robin)
+       *       - Time-based (each player can fire after N seconds)
+       *       - Simultaneous (each player selects a target and they all fire at once)
+       *    o Ships per board (min to max, based on board size).
+       *    o Victory Conditions: 
+       *       - Last player standing wins (tie breaker required if simultaneous mode)
+       *       - Point based: Earn points for hits and sinks. Player with 
+       *         highest score after clock expires will win.
+       */
+      function showCreateGamePanel() {
+         let ui = `
+               <div id="app-game-config-container">
+                  <b id="app-games-label">Create a New Game</b>
+                  <p>
+                  <div id="app-game-config-params">                     
+                     <h2>Game Access</h2>
+                     <div class="game-access-options">
+                        <label class="checkbox-container">
+                           <input type="radio" id="app-public-game" name="gameAccess" value="public" checked>
+                           <span class="checkbox-label">Public game</span>
+                        </label>
+
+                        <label class="checkbox-container">
+                           <input type="radio" id="app-private-game" name="gameAccess" value="private">
+                           <span class="checkbox-label">Private game</span>
+                        </label>
+
+                        &nbsp; &nbsp;
+                        <label for="game-password">Password:</label>
+                        <input id="app-game-password-input" type="text" name="game-password" placeholder="Password" disabled/>
+                     </div>
+
+                     <h2>Board Size</h2>
+                     <label for="game-board-size" class="dropdown-label">Choose a board size:</label>
+                     <select id="game-board-size" class="dropdown">
+                        <option value="8">8 x 8</option>
+                        <option value="10">10 x 10</option>
+                        <option value="12">12 x 12</option>
+                        <option value="14">14 x 14</option>
+                        <option value="16">16 x 16</option>
+                        <option value="18">18 x 18</option>
+                        <option value="20">20 x 20</option>
+                     </select>
+
+                     <h2>Number of Players</h2>
+                     <label for="app-number-players" class="dropdown-label">Human Players:</label>
+                     <select id="app-number-players" class="dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                     </select>
+                     &nbsp; &nbsp;
+                     <label for="app-ai-players" class="dropdown-label">AI Players:</label>
+                     <select id="app-ai-players" class="dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                     </select>
+
+                     <h2>Turn Management</h2>
+                     <label for="app-turn-management" class="dropdown-label">Turn Management:</label>
+                     <select id="app-turn-management" class="dropdown">
+                        <option value="turn">Turn-based (round-robin)</option>
+                        <option value="time">Time-based (each player can fire after N seconds)</option>
+                        <option value="simul">Simultaneous (all player selects a target and all fire at same time)</option>
+                     </select>
+                  </div>
+               </div>;
+            `;
+
+         JxLayout.appendContent('center', ui);
+      }
+
+      function hideGamesPanel() {
+         $('#app-games-container').remove();
+      }
+
+      function hideAllPanels() {
+         hideUsernamePanel();
+         hideErrorPanel();
+         hideGamesPanel();
+      }
+
+      function setUsername(username) {
+         log.info('Save username to localstore');
+         if (username) {
+            let entry = JSON.stringify({ username: username, ts: Date.now() });
+            localStorage.setItem('username', entry);
+            log.debug(' >> Saved: ' + entry);
+         } else {
+            localStorage.removeItem('username');
+            log.debug(' >> Removed username entry!');
          }
+      }
 
-         function hideAllPanels() {
-            hideUsernamePanel();
-            hideErrorPanel();
-            hideGamesPanel();
+      function getUsername() {
+         log.info('Get username from localstore');
+         let entry = localStorage.getItem('username');
+         log.debug(' >> Found: ' + entry);
+         let username = '';
+         if (entry) username = JSON.parse(entry).username;
+         log.debug(' >> Returning: ' + entry);
+         return username;
+      }
+
+      function restoreUsername() {
+         log.info('Restoring username');
+         let username = getUsername();
+         if (username) {
+            $('#app-username-input').val(username);
+            $('#app-username-input').trigger('input'); // Force validation!
          }
+      }
 
-         function setUsername(username) {
-            log.info('Save username to localstore');
-            if (username) {
-               let entry = JSON.stringify({ username: username, ts: Date.now() });
-               localStorage.setItem('username', entry);
-               log.debug(' >> Saved: ' + entry);
-            } else {
-               localStorage.removeItem('username');
-               log.debug(' >> Removed username entry!');
+      $('document').ready(function () {
+         log.info('Loaded Web App Template HTML!');
+
+         let GAMES = null;
+
+         // JxLogger.setOverrideLevel(JxLogger.DEBUG); // To debug!
+
+         JxLayout.initLayout({ south: false, west: false, east: false, panels: false });
+
+         JxLayout.hideWestPane();
+         JxLayout.hideEastPane();
+
+         initMusic();
+
+         $('#app-full-screen-button').on('click', () => {
+            log.info('Clicked full screen button');
+            if (isFullScreen) exitFullScreen();
+            else enterFullScreen();
+         });
+
+         showUsernamePanel();
+
+         $('body').on('blur', '#app-username-input', function (event) {
+            log.info("Username 'blur' event!");
+            log.debug(' >> Focus lost, trimming trailing whitespace!');
+            let value = $('#app-username-input').val();
+            value = value.trim();
+            $('#app-username-input').val(value);
+            setUsername(value);
+            $('#app-next-button').prop('disabled', value.length == 0);
+         });
+
+         $('body').on('input', '#app-username-input', function (event) {
+            log.info("Username 'input' event!");
+
+            let value = $('#app-username-input').val();
+
+            log.debug(" >> Value (start): '" + value + "'");
+
+            value = value.trimStart(); // Remove leading whitespaces!
+            value = value.replace(/\s+/g, ' '); // Remove duplicate spaces!
+
+            // NOTE: Allow trailing whitespaces since spaces are allowed!
+
+            // Ensure the first character is a letter
+            if (value.length > 0 && !/^[a-zA-Z]/.test(value[0])) {
+               value = value.slice(1); // Remove first character if it's not a letter
             }
-         }
 
-         function getUsername() {
-            log.info('Get username from localstore');
-            let entry = localStorage.getItem('username');
-            log.debug(' >> Found: ' + entry);
-            let username = '';
-            if (entry) username = JSON.parse(entry).username;
-            log.debug(' >> Returning: ' + entry);
-            return username;
-         }
+            // Ensure all characters are letters (a-z or A-Z)
+            // value = value.replace(/[^a-zA-Z]/g, ''); // Remove non-letter characters
 
-         function restoreUsername() {
-            log.info('Restoring username');
-            let username = getUsername();
-            if (username) {
-               $('#app-username-input').val(username);
-               $('#app-username-input').trigger('input'); // Force validation!
-            }
-         }
+            log.debug(" >> Value (final): '" + value + "'");
 
-         $('document').ready(function () {
-            log.info('Loaded Web App Template HTML!');
+            // Set the new value back to the input
+            $('#app-username-input').val(value);
 
-            let GAMES = null;
+            setUsername(value);
+            $('#app-next-button').prop('disabled', value.length == 0);
+         });
 
-            // JxLogger.setOverrideLevel(JxLogger.DEBUG); // To debug!
+         $('#app-next-button').on('click', () => {
+            log.info('Next button clicked');
 
-            JxLayout.initLayout({ south: false, west: false, east: false, panels: false });
-
-            JxLayout.hideWestPane();
-            JxLayout.hideEastPane();
-
-            initMusic();
-
-            $('#app-full-screen-button').on('click', () => {
-               log.info('Clicked full screen button');
-               if (isFullScreen) exitFullScreen();
-               else enterFullScreen();
-            });
-
-            showUsernamePanel();
-
-            $('body').on('blur', '#app-username-input', function (event) {
-               log.info("Username 'blur' event!");
-               log.debug(' >> Focus lost, trimming trailing whitespace!');
-               let value = $('#app-username-input').val();
-               value = value.trim();
-               $('#app-username-input').val(value);
-               setUsername(value);
-               $('#app-next-button').prop('disabled', value.length == 0);
-            });
-
-            $('body').on('input', '#app-username-input', function (event) {
-               log.info("Username 'input' event!");
-
-               let value = $('#app-username-input').val();
-
-               log.debug(" >> Value (start): '" + value + "'");
-
-               value = value.trimStart(); // Remove leading whitespaces!
-               value = value.replace(/\s+/g, ' '); // Remove duplicate spaces!
-
-               // NOTE: Allow trailing whitespaces since spaces are allowed!
-
-               // Ensure the first character is a letter
-               if (value.length > 0 && !/^[a-zA-Z]/.test(value[0])) {
-                  value = value.slice(1); // Remove first character if it's not a letter
-               }
-
-               // Ensure all characters are letters (a-z or A-Z)
-               // value = value.replace(/[^a-zA-Z]/g, ''); // Remove non-letter characters
-
-               log.debug(" >> Value (final): '" + value + "'");
-
-               // Set the new value back to the input
-               $('#app-username-input').val(value);
-
-               setUsername(value);
-               $('#app-next-button').prop('disabled', value.length == 0);
-            });
-
-            $('#app-next-button').on('click', () => {
-               log.info('Next button clicked');
-
-               var jqxhr = $.get('/api/v1/battleship/games', function (data) {
-                  log.debug(' >> Status : ', data);
-                  GAMES = data.payload.success.games;
-                  log.debug(' >> Games  : ', GAMES);
-                  hideAllPanels();
-                  showGamesPanel(GAMES);
-               }).fail(function (xhr, textStatus, errorThrown) {
-                  log.error(' >> Could not get available games!');
-                  hideAllPanels();
-                  let json = JSON.parse(xhr.responseText);
-                  let errors = json.payload.error.join(' ');
-                  let message = `
+            var jqxhr = $.get('/api/v1/battleship/games', function (data) {
+               log.debug(' >> Status : ', data);
+               GAMES = data.payload.success.games;
+               log.debug(' >> Games  : ', GAMES);
+               hideAllPanels();
+               showGamesPanel(GAMES);
+            }).fail(function (xhr, textStatus, errorThrown) {
+               log.error(' >> Could not get available games!');
+               hideAllPanels();
+               let json = JSON.parse(xhr.responseText);
+               let errors = json.payload.error.join(' ');
+               let message = `
                      <b>Description:</b> ${json.http.description}<p>
                      <b>Details</b>: ${errors}
                   `;
-                  showErrorPanel(`HTTP-${json.http.status}`, message);
-               });
+               showErrorPanel(`HTTP-${json.http.status}`, message);
             });
+         });
 
-            $('body').on('click', '#app-create-game', () => {
-               log.info('Create a new game button clicked');
-               hideAllPanels();
-            });
+         $('body').on('click', '#app-create-game', () => {
+            log.info('Create a new game button clicked');
+            hideAllPanels();
+         });
 
-            $('body').on('keydown', '#app-username-container', function (event) {
-               // return; // for now!
-               log.info("Username 'keydown' event!");
+         $('body').on('keydown', '#app-username-container', function (event) {
+            // return; // for now!
+            log.info("Username 'keydown' event!");
 
-               const allowKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-! ';
-               const ctrlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Home', 'End', 'Enter'];
+            const allowKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-! ';
+            const ctrlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Home', 'End', 'Enter'];
 
-               const key = event.key;
-               const code = event.keyCode;
+            const key = event.key;
+            const code = event.keyCode;
 
-               log.debug(' >> Key: ' + key + ' (keycode: ' + code + ')');
+            log.debug(' >> Key: ' + key + ' (keycode: ' + code + ')');
 
-               // Allow valid characters, functional keys, and Shift+Home/Shift+End combinations
-               if (allowKeys.includes(key) || ctrlKeys.includes(key) || (event.shiftKey && (key === 'Home' || key === 'End'))) {
-                  log.debug(' >> key is allowed!');
+            // Allow valid characters, functional keys, and Shift+Home/Shift+End combinations
+            if (allowKeys.includes(key) || ctrlKeys.includes(key) || (event.shiftKey && (key === 'Home' || key === 'End'))) {
+               log.debug(' >> key is allowed!');
 
-                  if (event.key === 'Enter') {
-                     log.debug(' >> ENTER pressed, losing focus!');
-                     $('#app-username-input').blur();
-                  }
-
-                  return; // Allow the key press
+               if (event.key === 'Enter') {
+                  log.debug(' >> ENTER pressed, losing focus!');
+                  $('#app-username-input').blur();
                }
 
-               log.debug(' >> key is rejected!');
+               return; // Allow the key press
+            }
 
-               event.preventDefault(); // Block all other inputs
-            });
+            log.debug(' >> key is rejected!');
 
-            $('body').on('click', '.app-game-create-link', () => {
-               log.info('Create a new game link clicked');
-            });
-
-            $('body').on('click', '.app-game-join-link', function () {
-               log.info('Join a game link clicked');
-               let id = $(this).attr('id');
-               log.debug(' >> ID: ' + id);
-            });
-
-            restoreUsername();
+            event.preventDefault(); // Block all other inputs
          });
-      </script>
-   </head>
 
-   <body>
-      <div class="ui-layout-north">
-         <div id="ui-view-north" ui-view="north">
-            <div class="app-banner">
-               <img id="app-header-logo" src="images/banner.png" alt="Banner" />
-               <span id="app-header-version">Version: 1.0</span>
-            </div>
+         $('body').on('click', '.app-game-create-link', () => {
+            log.info('Create a new game link clicked');
+            hideAllPanels();
+            showCreateGamePanel();
+         });
 
-            <div id="app-controls">
-               <button id="app-full-screen-button" class="app-button">Go Fullscreen</button>
-               <button id="app-play-button" class="app-button">Play Music</button>
-               <button id="app-next-track" class="app-button">Next Track</button>
-            </div>
+         $('body').on('click', '.app-game-join-link', function () {
+            log.info('Join a game link clicked');
+            let id = $(this).attr('id');
+            log.debug(' >> ID: ' + id);
+         });
+
+         $('body').on('change', 'input[name="gameAccess"]', function () {
+            log.debug("Clicked on game mode options!");
+
+            let state = false;
+
+            if ($(this).val() === 'public') {
+               log.debug(' >> Public game selected');
+               state = true;
+            } else if ($(this).val() === 'private') {
+               log.debug(' >> Private game selected');
+               state = false;
+            }
+
+            log.debug(" >> State: " + state);
+
+            $('#app-game-password-input').prop('disabled', state);
+         });
+
+         restoreUsername();
+      });
+   </script>
+</head>
+
+<body>
+   <div class="ui-layout-north">
+      <div id="ui-view-north" ui-view="north">
+         <div class="app-banner">
+            <img id="app-header-logo" src="images/banner.png" alt="Banner" />
+            <span id="app-header-version">Version: 1.0</span>
+         </div>
+
+         <div id="app-controls">
+            <button id="app-full-screen-button" class="app-button">Go Fullscreen</button>
+            <button id="app-play-button" class="app-button">Play Music</button>
+            <button id="app-next-track" class="app-button">Next Track</button>
          </div>
       </div>
+   </div>
 
-      <div class="ui-layout-center">
-         <div class="ui-layout-header">
-            <div id="ui-view-center-header" ui-view="center-header">Center Header</div>
-         </div>
-         <div class="ui-layout-content, app-center-content">
-            <div id="ui-view-center" ui-view="center"></div>
-         </div>
-         <div class="ui-layout-footer">Center Footer</div>
+   <div class="ui-layout-center">
+      <div class="ui-layout-header">
+         <div id="ui-view-center-header" ui-view="center-header">Center Header</div>
       </div>
+      <div class="ui-layout-content, app-center-content">
+         <div id="ui-view-center" ui-view="center"></div>
+      </div>
+      <div class="ui-layout-footer">Center Footer</div>
+   </div>
 
-      <div class="ui-layout-west">
-         <div class="ui-layout-header">West Header</div>
-         <div class="ui-layout-content">
-            <div id="ui-view-west" ui-view="west">West Content</div>
-         </div>
-         <div class="ui-layout-footer">West Footer</div>
+   <div class="ui-layout-west">
+      <div class="ui-layout-header">West Header</div>
+      <div class="ui-layout-content">
+         <div id="ui-view-west" ui-view="west">West Content</div>
       </div>
+      <div class="ui-layout-footer">West Footer</div>
+   </div>
 
-      <div class="ui-layout-east">
-         <div class="ui-layout-header">East Header</div>
-         <div class="ui-layout-content">
-            <div id="ui-view-east" ui-view="east">East Content</div>
-         </div>
-         <div class="ui-layout-footer">East Footer</div>
+   <div class="ui-layout-east">
+      <div class="ui-layout-header">East Header</div>
+      <div class="ui-layout-content">
+         <div id="ui-view-east" ui-view="east">East Content</div>
       </div>
+      <div class="ui-layout-footer">East Footer</div>
+   </div>
 
-      <div class="ui-layout-south">
-         <div id="ui-view-south" ui-view="south">
-            <div class="app-footer">
-               <span id="app-footer-text">Copyright (C) 2024 by Nuvoola AI. &nbsp;All Rights Reserved.</span>
-            </div>
+   <div class="ui-layout-south">
+      <div id="ui-view-south" ui-view="south">
+         <div class="app-footer">
+            <span id="app-footer-text">Copyright (C) 2024 by Nuvoola AI. &nbsp;All Rights Reserved.</span>
          </div>
       </div>
-   </body>
+   </div>
+</body>
+
 </html>
