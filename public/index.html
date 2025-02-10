@@ -116,7 +116,7 @@
             'traveling-memories-technology-future-synthwave-199941.mp3',
             'urban-night-151632.mp3',
             'venice-beach-269483.mp3',
-            'whatever-it-takes-165616.mp3',
+            'whatever-it-takes-165616.mp3'
          ];
 
          let isFullScreen = false;
@@ -168,6 +168,23 @@
             return arr[idx];
          };
 
+         function playMusic() {
+            audio
+               .play()
+               .then(() => {
+                  audioPlaying = true;
+                  log.debug('Play started');
+                  $('#app-play-button').html('Mute Music');
+                  setPlayState(audioPlaying);
+               })
+               .catch((error) => {
+                  audioPlaying = false;
+                  log.error('Play failed');
+                  $('#app-play-button').html('Play Music');
+                  setPlayState(audioPlaying);
+               });
+         }
+
          function initMusic(trackName) {
             log.info('Initializing music');
 
@@ -185,39 +202,19 @@
             audio.volume = 0.4; // Set initial volume
             document.body.appendChild(audio);
 
-            // Try to play the audio
-            audio
-               .play()
-               .then(() => {
-                  log.debug('Audio playing');
-                  $('#app-play-button').html('Mute Music');
-                  audioPlaying = true;
-               })
-               .catch((error) => {
-                  log.error('Failed to play audio');
-                  $('#app-play-button').html('Play Music');
-                  audioPlaying = false;
-               });
+            let playing = getPlayState();
+
+            if (playing) playMusic();
 
             // Add music event handler
             $('#app-play-button').on('click', () => {
                if (audioPlaying) {
                   audio.pause();
-                  $('#app-play-button').html('Play Music');
                   audioPlaying = false;
+                  $('#app-play-button').html('Play Music');
+                  setPlayState(audioPlaying);
                } else {
-                  audio
-                     .play()
-                     .then(() => {
-                        log.debug('Audio playing');
-                        $('#app-play-button').html('Mute Music');
-                        audioPlaying = true;
-                     })
-                     .catch((error) => {
-                        log.error('Failed to play audio');
-                        $('#app-play-button').html('Play Music');
-                        audioPlaying = false;
-                     });
+                  playMusic();
                }
             });
 
@@ -226,48 +223,26 @@
                audio.pause();
                trackName = getRandomAudioTrack(AUDIO_TRACKS);
                audio.src = '/music/' + trackName;
-               audio
-                  .play()
-                  .then(() => {
-                     log.debug('Audio playing');
-                     $('#app-play-button').html('Mute Music');
-                     audioPlaying = true;
-                  })
-                  .catch((error) => {
-                     log.error('Failed to play audio');
-                     $('#app-play-button').html('Play Music');
-                     audioPlaying = false;
-                  });
+               playMusic();
             });
 
             audio.addEventListener('ended', () => {
                log.info('Audio playback completed, loading a new track!');
                trackName = getRandomAudioTrack(AUDIO_TRACKS);
                audio.src = '/music/' + trackName;
-               audio
-                  .play()
-                  .then(() => {
-                     log.debug('Audio playing');
-                     $('#app-play-button').html('Mute Music');
-                     audioPlaying = true;
-                  })
-                  .catch((error) => {
-                     log.error('Failed to play audio');
-                     $('#app-play-button').html('Play Music');
-                     audioPlaying = false;
-                  });
+               playMusic();
             });
          }
 
          function showUsernamePanel() {
             let ui = `
-               <div id="app-username-container">
-                  <b id="app-username-label" for="username">Enter a username:</b>
-                  <input id="app-username-input" type="text" name="username" placeholder="Username" />
-                  <p>
-                  <button id="app-next-button" class="app-button" disabled>Next</button>
-               </div>;
-            `;
+                        <div id="app-username-container">
+                           <b id="app-username-label" for="username">Enter a username:</b>
+                           <input id="app-username-input" type="text" name="username" placeholder="Username" />
+                           <p>
+                           <button id="app-next-button" class="app-button" disabled>Next</button>
+                        </div>;
+                     `;
 
             $('body').append(ui);
          }
@@ -278,12 +253,12 @@
 
          function showErrorPanel(header, message) {
             let ui = `
-               <div id="app-error-container">
-                  <b id="app-error-label" for="username">Error!</b>
-                  <p>
-                  <div id="app-error-message"></div>
-               </div>;
-            `;
+                        <div id="app-error-container">
+                           <b id="app-error-label" for="username">Error!</b>
+                           <p>
+                           <div id="app-error-message"></div>
+                        </div>;
+                     `;
 
             $('body').append(ui);
 
@@ -297,41 +272,41 @@
 
          function showGamesPanel(data) {
             let ui = `
-               <div id="app-games-container">
-                  <b id="app-games-label">Showing Active Games</b>
-                  <p>
-                  <div id="app-games-list"></div>
-               </div>;
-            `;
+                        <div id="app-games-container">
+                           <b id="app-games-label">Showing Active Games</b>
+                           <p>
+                           <div id="app-games-list"></div>
+                        </div>;
+                     `;
 
             JxLayout.appendContent('center', ui);
 
             if (data && data.games) {
                log.debug(' >> Listing games');
 
-               for (let i = 0; i < 10; i++) {
-                  data.games.push(data.games[0]); // Clone data!
-               }
+               // for (let i = 0; i < 10; i++) {
+               //    data.games.push(data.games[0]); // Clone data!
+               // }
 
                let count = data.games.length;
 
                if (count == 0) {
                   $('#app-games-label').html(`
-                     <b class="app-game-link app-game-create-link">Create New Game</b>
-                   `);
+                              <b class="app-game-link app-game-create-link">Create New Game</b>
+                            `);
 
                   $('#app-games-list').html(`
-                     No active games currently exist!
-                     <p>
-                     <button id="app-create-game" class="app-button">New Game</button>
-                     `);
+                              No active games currently exist!
+                              <p>
+                              <button id="app-create-game" class="app-button">New Game</button>
+                              `);
                }
 
                if (count > 0) {
                   $('#app-games-label').html(`
-                        Showing ${count} Active Games
-                        <b class="app-game-link app-game-create-link">Create New Game</b>
-                     `);
+                                 Showing ${count} Active Games
+                                 <b class="app-game-link app-game-create-link">Create New Game</b>
+                              `);
 
                   data.games.forEach((game) => {
                      let humans = game.players.reduce((result, player, idx, array) => {
@@ -349,25 +324,25 @@
                      if (computers > 0) players = players + ', ' + computers + ' computer' + (computers == 1 ? '' : 's'); // Stringify
 
                      $('#app-games-list').append(`
-                        <div id='app-game-item'>
-                           <span class="app-game-item-label">Created:</span>
-                           <span class="app-game-item-value">${moment(game.created).fromNow()}</span>
+                                 <div id='app-game-item'>
+                                    <span class="app-game-item-label">Created:</span>
+                                    <span class="app-game-item-value">${moment(game.created).fromNow()}</span>
 
-                           <span class="app-game-item-label">By:</span>
-                           <span class="app-game-item-value">${game.username}</span>
+                                    <span class="app-game-item-label">By:</span>
+                                    <span class="app-game-item-value">${game.username}</span>
 
-                           <span class="app-game-item-label">Status:</span>
-                           <span class="app-game-item-value">${game.status}</span>
+                                    <span class="app-game-item-label">Status:</span>
+                                    <span class="app-game-item-value">${game.status}</span>
 
-                           <span class="app-game-item-label">Mode:</span>
-                           <span class="app-game-item-value">${game.mode}</span>
+                                    <span class="app-game-item-label">Mode:</span>
+                                    <span class="app-game-item-value">${game.mode}</span>
 
-                           <span class="app-game-item-label">Players:</span>
-                           <span class="app-game-item-value">${players}</span>
+                                    <span class="app-game-item-label">Players:</span>
+                                    <span class="app-game-item-value">${players}</span>
 
-                           <b id="${game.id}" class="app-game-link app-game-join-link">Join</b>
-                        <div>
-                     `);
+                                    <b id="${game.id}" class="app-game-link app-game-join-link">Join</b>
+                                 <div>
+                              `);
                   });
                }
             } else {
@@ -389,7 +364,7 @@
          function setUsername(username) {
             log.info('Save username to localstore');
             if (username) {
-               let entry = JSON.stringify({ username: username, ts: Date.now() });
+               let entry = JSON.stringify({ created: Date.now(), username: username, userID: getUserID() });
                localStorage.setItem('username', entry);
                log.debug(' >> Saved: ' + entry);
             } else {
@@ -417,12 +392,79 @@
             }
          }
 
+         function setGameSettings(settings) {
+            log.info('Saving game settings to localstore');
+            let json = JSON.stringify(settings);
+            log.debug(' >> Settings: ' + json);
+            localStorage.setItem('settings', json);
+         }
+
+         function getGameSettings() {
+            log.info('Getting game settings from localstore');
+            let json = localStorage.getItem('settings');
+            if (!json) json = JSON.stringify({});
+            let settings = JSON.parse(json);
+            log.debug(' >> Settings: ', settings);
+            return settings;
+         }
+
+         function generateHashCode(length = 16) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let hash = '';
+            for (let i = 0; i < length; i++) {
+               const randomIndex = Math.floor(Math.random() * characters.length);
+               hash += characters[randomIndex];
+            }
+            return hash;
+         }
+
+         function removeAll() {
+            log.info('Removing all localstore items!');
+            localStorage.removeItem('username');
+            localStorage.removeItem('settings');
+            localStorage.removeItem('userID');
+         }
+
+         function getUserID() {
+            log.info('Getting user ID');
+
+            let json = localStorage.getItem('userID');
+            let entry = null;
+
+            if (!json) {
+               entry = { userID: generateHashCode(8) };
+               log.debug(' >> Creating user ID: ' + entry.userID);
+               localStorage.setItem('userID', JSON.stringify(entry));
+            } else entry = JSON.parse(json);
+
+            log.debug(' >> User ID: ' + entry.userID);
+
+            return entry.userID;
+         }
+
+         function setPlayState(state) {
+            log.info('Setting playing state to localstore');
+            let settings = getGameSettings();
+            settings.music = state;
+            setGameSettings(settings);
+         }
+
+         function getPlayState() {
+            log.info('Getting playing state from localstore');
+            let settings = getGameSettings();
+            let playing = settings.music;
+            log.debug(' >> Music is playing: ' + playing);
+            return playing;
+         }
+
          $('document').ready(function () {
             log.info('Loaded Web App Template HTML!');
 
             let GAMES = null;
 
             // JxLogger.setOverrideLevel(JxLogger.DEBUG); // To debug!
+
+            // const userID = getUserID();
 
             JxLayout.initLayout({ south: false, west: false, east: false, panels: false });
 
@@ -493,9 +535,9 @@
                   let json = JSON.parse(xhr.responseText);
                   let errors = json.payload.error.join(' ');
                   let message = `
-                     <b>Description:</b> ${json.http.description}<p>
-                     <b>Details</b>: ${errors}
-                  `;
+                              <b>Description:</b> ${json.http.description}<p>
+                              <b>Details</b>: ${errors}
+                           `;
                   showErrorPanel(`HTTP-${json.http.status}`, message);
                });
             });
