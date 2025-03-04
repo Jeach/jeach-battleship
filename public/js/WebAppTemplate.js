@@ -159,19 +159,7 @@ var WebAppTemplate = (function () {
    //
    // As many functions as required can be added here.
    //---------------------------------------------------------------------------------------------
-
-   /**
-    * Sample private function (can be deleted).
-    *
-    * @author  Christian Jean
-    * @since   1.0.0
-    *
-    * @returns {Object} describe this parameter.
-    */
-   function barfoo() {
-      log.info('Called barfoo (a private domain function)');
-      log.debug(' >> This private domain function can only be called within this module!');
-   }
+  
 
    //---------------------------------------------------------------------------------------------
    // Public domain functions...

@@ -168,23 +168,6 @@
             return arr[idx];
          };
 
-         function playMusic() {
-            audio
-               .play()
-               .then(() => {
-                  audioPlaying = true;
-                  log.debug('Play started');
-                  $('#app-play-button').html('Mute Music');
-                  setPlayState(audioPlaying);
-               })
-               .catch((error) => {
-                  audioPlaying = false;
-                  log.error('Play failed');
-                  $('#app-play-button').html('Play Music');
-                  setPlayState(audioPlaying);
-               });
-         }
-
          function initMusic(trackName) {
             log.info('Initializing music');
 
@@ -202,19 +185,39 @@
             audio.volume = 0.4; // Set initial volume
             document.body.appendChild(audio);
 
-            let playing = getPlayState();
-
-            if (playing) playMusic();
+            // Try to play the audio
+            audio
+               .play()
+               .then(() => {
+                  log.debug('Audio playing');
+                  $('#app-play-button').html('Mute Music');
+                  audioPlaying = true;
+               })
+               .catch((error) => {
+                  log.error('Failed to play audio');
+                  $('#app-play-button').html('Play Music');
+                  audioPlaying = false;
+               });
 
             // Add music event handler
             $('#app-play-button').on('click', () => {
                if (audioPlaying) {
                   audio.pause();
-                  audioPlaying = false;
                   $('#app-play-button').html('Play Music');
-                  setPlayState(audioPlaying);
+                  audioPlaying = false;
                } else {
-                  playMusic();
+                  audio
+                     .play()
+                     .then(() => {
+                        log.debug('Audio playing');
+                        $('#app-play-button').html('Mute Music');
+                        audioPlaying = true;
+                     })
+                     .catch((error) => {
+                        log.error('Failed to play audio');
+                        $('#app-play-button').html('Play Music');
+                        audioPlaying = false;
+                     });
                }
             });
 
@@ -223,26 +226,48 @@
                audio.pause();
                trackName = getRandomAudioTrack(AUDIO_TRACKS);
                audio.src = '/music/' + trackName;
-               playMusic();
+               audio
+                  .play()
+                  .then(() => {
+                     log.debug('Audio playing');
+                     $('#app-play-button').html('Mute Music');
+                     audioPlaying = true;
+                  })
+                  .catch((error) => {
+                     log.error('Failed to play audio');
+                     $('#app-play-button').html('Play Music');
+                     audioPlaying = false;
+                  });
             });
 
             audio.addEventListener('ended', () => {
                log.info('Audio playback completed, loading a new track!');
                trackName = getRandomAudioTrack(AUDIO_TRACKS);
                audio.src = '/music/' + trackName;
-               playMusic();
+               audio
+                  .play()
+                  .then(() => {
+                     log.debug('Audio playing');
+                     $('#app-play-button').html('Mute Music');
+                     audioPlaying = true;
+                  })
+                  .catch((error) => {
+                     log.error('Failed to play audio');
+                     $('#app-play-button').html('Play Music');
+                     audioPlaying = false;
+                  });
             });
          }
 
          function showUsernamePanel() {
             let ui = `
-                        <div id="app-username-container">
-                           <b id="app-username-label" for="username">Enter a username:</b>
-                           <input id="app-username-input" type="text" name="username" placeholder="Username" />
-                           <p>
-                           <button id="app-next-button" class="app-button" disabled>Next</button>
-                        </div>;
-                     `;
+               <div id="app-username-container">
+                  <b id="app-username-label" for="username">Enter a username:</b>
+                  <input id="app-username-input" type="text" name="username" placeholder="Username" />
+                  <p>
+                  <button id="app-next-button" class="app-button" disabled>Next</button>
+               </div>;
+            `;
 
             $('body').append(ui);
          }
@@ -253,12 +278,12 @@
 
          function showErrorPanel(header, message) {
             let ui = `
-                        <div id="app-error-container">
-                           <b id="app-error-label" for="username">Error!</b>
-                           <p>
-                           <div id="app-error-message"></div>
-                        </div>;
-                     `;
+               <div id="app-error-container">
+                  <b id="app-error-label" for="username">Error!</b>
+                  <p>
+                  <div id="app-error-message"></div>
+               </div>;
+            `;
 
             $('body').append(ui);
 
@@ -272,41 +297,41 @@
 
          function showGamesPanel(data) {
             let ui = `
-                        <div id="app-games-container">
-                           <b id="app-games-label">Showing Active Games</b>
-                           <p>
-                           <div id="app-games-list"></div>
-                        </div>;
-                     `;
+               <div id="app-games-container">
+                  <b id="app-games-label">Showing Active Games</b>
+                  <p>
+                  <div id="app-games-list"></div>
+               </div>;
+            `;
 
             JxLayout.appendContent('center', ui);
 
             if (data && data.games) {
                log.debug(' >> Listing games');
 
-               // for (let i = 0; i < 10; i++) {
-               //    data.games.push(data.games[0]); // Clone data!
-               // }
+               for (let i = 0; i < 10; i++) {
+                  data.games.push(data.games[0]); // Clone data!
+               }
 
                let count = data.games.length;
 
                if (count == 0) {
                   $('#app-games-label').html(`
-                              <b class="app-game-link app-game-create-link">Create New Game</b>
-                            `);
+                     <b class="app-game-link app-game-create-link">Create New Game</b>
+                   `);
 
                   $('#app-games-list').html(`
-                              No active games currently exist!
-                              <p>
-                              <button id="app-create-game" class="app-button">New Game</button>
-                              `);
+                     No active games currently exist!
+                     <p>
+                     <button id="app-create-game" class="app-button">New Game</button>
+                     `);
                }
 
                if (count > 0) {
                   $('#app-games-label').html(`
-                                 Showing ${count} Active Games
-                                 <b class="app-game-link app-game-create-link">Create New Game</b>
-                              `);
+                        Showing ${count} Active Games
+                        <b class="app-game-link app-game-create-link">Create New Game</b>
+                     `);
 
                   data.games.forEach((game) => {
                      let humans = game.players.reduce((result, player, idx, array) => {
@@ -324,31 +349,125 @@
                      if (computers > 0) players = players + ', ' + computers + ' computer' + (computers == 1 ? '' : 's'); // Stringify
 
                      $('#app-games-list').append(`
-                                 <div id='app-game-item'>
-                                    <span class="app-game-item-label">Created:</span>
-                                    <span class="app-game-item-value">${moment(game.created).fromNow()}</span>
+                        <div id='app-game-item'>
+                           <span class="app-game-item-label">Created:</span>
+                           <span class="app-game-item-value">${moment(game.created).fromNow()}</span>
 
-                                    <span class="app-game-item-label">By:</span>
-                                    <span class="app-game-item-value">${game.username}</span>
+                           <span class="app-game-item-label">By:</span>
+                           <span class="app-game-item-value">${game.username}</span>
 
-                                    <span class="app-game-item-label">Status:</span>
-                                    <span class="app-game-item-value">${game.status}</span>
+                           <span class="app-game-item-label">Status:</span>
+                           <span class="app-game-item-value">${game.status}</span>
 
-                                    <span class="app-game-item-label">Mode:</span>
-                                    <span class="app-game-item-value">${game.mode}</span>
+                           <span class="app-game-item-label">Mode:</span>
+                           <span class="app-game-item-value">${game.mode}</span>
 
-                                    <span class="app-game-item-label">Players:</span>
-                                    <span class="app-game-item-value">${players}</span>
+                           <span class="app-game-item-label">Players:</span>
+                           <span class="app-game-item-value">${players}</span>
 
-                                    <b id="${game.id}" class="app-game-link app-game-join-link">Join</b>
-                                 <div>
-                              `);
+                           <b id="${game.id}" class="app-game-link app-game-join-link">Join</b>
+                        <div>
+                     `);
                   });
                }
             } else {
                log.warn(' >> No game data found!');
                $('#app-games-list').html('<b>Warning</b>: No game data could be found!');
             }
+         }
+
+         /**
+          * Game Settings:
+          *
+          *    o Game acces:
+          *       - Private game (password protected)
+          *       - Public game
+          *    o Game board size (6x6, 8x8, 10x10, 12x12, 14x14, 16x16, etc.)
+          *    o Number of players (1 to 8)
+          *       - Number of human players
+          *       - Number of AI players
+          *    o Turn management:
+          *       - Turn-based (round-robin)
+          *       - Time-based (each player can fire after N seconds)
+          *       - Simultaneous (each player selects a target and they all fire at once)
+          *    o Ships per board (min to max, based on board size).
+          *    o Victory Conditions:
+          *       - Last player standing wins (tie breaker required if simultaneous mode)
+          *       - Point based: Earn points for hits and sinks. Player with
+          *         highest score after clock expires will win.
+          */
+         function showCreateGamePanel() {
+            let ui = `
+               <div id="app-game-config-container">
+                  <b id="app-games-label">Create a New Game</b>
+                  <p>
+                  <div id="app-game-config-params">                     
+                     <h2>Game Access</h2>
+                     <div class="game-access-options">
+                        <label class="checkbox-container">
+                           <input type="radio" id="app-public-game" name="gameAccess" value="public" checked>
+                           <span class="checkbox-label">Public game</span>
+                        </label>
+
+                        <label class="checkbox-container">
+                           <input type="radio" id="app-private-game" name="gameAccess" value="private">
+                           <span class="checkbox-label">Private game</span>
+                        </label>
+
+                        &nbsp; &nbsp;
+                        <label for="game-password">Password:</label>
+                        <input id="app-game-password-input" type="text" name="game-password" placeholder="Password" disabled/>
+                     </div>
+
+                     <h2>Board Size</h2>
+                     <label for="game-board-size" class="dropdown-label">Choose a board size:</label>
+                     <select id="game-board-size" class="dropdown">
+                        <option value="8">8 x 8</option>
+                        <option value="10">10 x 10</option>
+                        <option value="12">12 x 12</option>
+                        <option value="14">14 x 14</option>
+                        <option value="16">16 x 16</option>
+                        <option value="18">18 x 18</option>
+                        <option value="20">20 x 20</option>
+                     </select>
+
+                     <h2>Number of Players</h2>
+                     <label for="app-number-players" class="dropdown-label">Human Players:</label>
+                     <select id="app-number-players" class="dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                     </select>
+                     &nbsp; &nbsp;
+                     <label for="app-ai-players" class="dropdown-label">AI Players:</label>
+                     <select id="app-ai-players" class="dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                     </select>
+
+                     <h2>Turn Management</h2>
+                     <label for="app-turn-management" class="dropdown-label">Turn Management:</label>
+                     <select id="app-turn-management" class="dropdown">
+                        <option value="turn">Turn-based (round-robin)</option>
+                        <option value="time">Time-based (each player can fire after N seconds)</option>
+                        <option value="simul">Simultaneous (all player selects a target and all fire at same time)</option>
+                     </select>
+                  </div>
+               </div>;
+            `;
+
+            JxLayout.appendContent('center', ui);
          }
 
          function hideGamesPanel() {
@@ -364,7 +483,7 @@
          function setUsername(username) {
             log.info('Save username to localstore');
             if (username) {
-               let entry = JSON.stringify({ created: Date.now(), username: username, userID: getUserID() });
+               let entry = JSON.stringify({ username: username, ts: Date.now() });
                localStorage.setItem('username', entry);
                log.debug(' >> Saved: ' + entry);
             } else {
@@ -392,79 +511,12 @@
             }
          }
 
-         function setGameSettings(settings) {
-            log.info('Saving game settings to localstore');
-            let json = JSON.stringify(settings);
-            log.debug(' >> Settings: ' + json);
-            localStorage.setItem('settings', json);
-         }
-
-         function getGameSettings() {
-            log.info('Getting game settings from localstore');
-            let json = localStorage.getItem('settings');
-            if (!json) json = JSON.stringify({});
-            let settings = JSON.parse(json);
-            log.debug(' >> Settings: ', settings);
-            return settings;
-         }
-
-         function generateHashCode(length = 16) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let hash = '';
-            for (let i = 0; i < length; i++) {
-               const randomIndex = Math.floor(Math.random() * characters.length);
-               hash += characters[randomIndex];
-            }
-            return hash;
-         }
-
-         function removeAll() {
-            log.info('Removing all localstore items!');
-            localStorage.removeItem('username');
-            localStorage.removeItem('settings');
-            localStorage.removeItem('userID');
-         }
-
-         function getUserID() {
-            log.info('Getting user ID');
-
-            let json = localStorage.getItem('userID');
-            let entry = null;
-
-            if (!json) {
-               entry = { userID: generateHashCode(8) };
-               log.debug(' >> Creating user ID: ' + entry.userID);
-               localStorage.setItem('userID', JSON.stringify(entry));
-            } else entry = JSON.parse(json);
-
-            log.debug(' >> User ID: ' + entry.userID);
-
-            return entry.userID;
-         }
-
-         function setPlayState(state) {
-            log.info('Setting playing state to localstore');
-            let settings = getGameSettings();
-            settings.music = state;
-            setGameSettings(settings);
-         }
-
-         function getPlayState() {
-            log.info('Getting playing state from localstore');
-            let settings = getGameSettings();
-            let playing = settings.music;
-            log.debug(' >> Music is playing: ' + playing);
-            return playing;
-         }
-
          $('document').ready(function () {
             log.info('Loaded Web App Template HTML!');
 
             let GAMES = null;
 
             // JxLogger.setOverrideLevel(JxLogger.DEBUG); // To debug!
-
-            // const userID = getUserID();
 
             JxLayout.initLayout({ south: false, west: false, east: false, panels: false });
 
@@ -535,9 +587,9 @@
                   let json = JSON.parse(xhr.responseText);
                   let errors = json.payload.error.join(' ');
                   let message = `
-                              <b>Description:</b> ${json.http.description}<p>
-                              <b>Details</b>: ${errors}
-                           `;
+                     <b>Description:</b> ${json.http.description}<p>
+                     <b>Details</b>: ${errors}
+                  `;
                   showErrorPanel(`HTTP-${json.http.status}`, message);
                });
             });
@@ -578,12 +630,32 @@
 
             $('body').on('click', '.app-game-create-link', () => {
                log.info('Create a new game link clicked');
+               hideAllPanels();
+               showCreateGamePanel();
             });
 
             $('body').on('click', '.app-game-join-link', function () {
                log.info('Join a game link clicked');
                let id = $(this).attr('id');
                log.debug(' >> ID: ' + id);
+            });
+
+            $('body').on('change', 'input[name="gameAccess"]', function () {
+               log.debug('Clicked on game mode options!');
+
+               let state = false;
+
+               if ($(this).val() === 'public') {
+                  log.debug(' >> Public game selected');
+                  state = true;
+               } else if ($(this).val() === 'private') {
+                  log.debug(' >> Private game selected');
+                  state = false;
+               }
+
+               log.debug(' >> State: ' + state);
+
+               $('#app-game-password-input').prop('disabled', state);
             });
 
             restoreUsername();

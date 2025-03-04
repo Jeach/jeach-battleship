@@ -70,3 +70,46 @@ All audio tracks and instrumentals are provided royalty-free and are free to use
 2. [Chosic](https://www.chosic.com/free-music/energetic/) - 0 audio tracks being used.
 
 **Upcoming** - A comprehensive list of media files utilized will soon be made available to acknowledge and promote their creators individually, including providing direct links to the corresponding digital assets.
+
+## Game Play
+
+### Minimal Grid Size Configuration
+
+#### Suggested Size: 6x6
+
+#### Why?
+
+1. Quick Gameplay: A smaller grid allows for faster games, ideal for casual players or those with limited time.
+2. Increased Engagement: Players have less area to scan, increasing the likelihood of early hits, which keeps the game dynamic.
+3. Simplified Strategy: With fewer cells, players can focus more on attacking rather than extensive searching, making it beginner-friendly.
+4. Appropriate for Fewer Ships: Works well if the number of ships and their sizes are reduced (e.g., 1 ship of size 3, 2 ships of size 2).
+
+### Maximum Grid Size Configuration
+
+#### Suggested Size: 16x16
+
+#### Why?
+
+1. Strategic Depth: A larger grid creates more room for strategic placement and searching, appealing to experienced players.
+2. Longer Gameplay: The game takes longer to complete, suitable for dedicated sessions.
+3. Accommodates More Ships: Supports a higher number of ships or larger ships (e.g., aircraft carriers, battleships, submarines).
+4. Enhanced Stealth: The larger area reduces the likelihood of random hits, requiring players to use more deductive reasoning.
+
+
+| Grid Size | Type of Gameplay     | Ideal For                          | Ship Configuration Example | Total Ships |
+|-----------|----------------------|------------------------------------|----------------------------|-------------|
+| 6x6       | Quick, Casual        | Beginners, Limited Time            | 1x3, 2x2, 3x1              | 3           |
+| 10x10     | Standard             | Most Players                       | 1x5, 2x4, 3x3, 4x2, 5x1    | 5           |
+| 16x16     | Extended, Tactical   | Experienced Players, Long Sessions | 1x6, 2x5, 3x4, 4x3, 5x2    |5            |
+
+
+### Types of Ships and Submarines
+
+| Size | Ship Name      | Description |
+|------|----------------|-------------|
+| 1    | Patrol Boat    | A Patrol Boat is a small, fast vessel typically used for coastal defense, reconnaissance, and policing waters. They are agile and often armed with small-caliber weapons for defense against small targets such as pirate vessels or intruding ships. |
+| 2    | Frigate        | A Frigate is a medium-sized warship designed for escort and protection duties, including anti-submarine warfare, air defense, and surface warfare. Frigates are more heavily armed than patrol boats, with advanced radar and weaponry, and are often used in naval task forces. |
+| 3    | Destroyer      | A Destroyer is a fast and heavily armed warship used for a variety of roles, including escorting larger ships, anti-aircraft defense, and anti-submarine operations. They are often equipped with guided missiles, advanced radar systems, and torpedoes, making them versatile in modern naval combat. |
+| 4    | Submarine      | A Submarine is a highly specialized vessel designed for stealth and underwater operations. Submarines can be nuclear or diesel-powered and are capable of launching torpedoes or missiles. They are primarily used for stealthy reconnaissance, attack missions, and nuclear deterrence. |
+| 5    | Battleship     | A Battleship is a large, heavily armored warship equipped with massive guns capable of long-range bombardment. Though battleships were the backbone of naval power in the early to mid-20th century, they have largely been replaced by missile ships and aircraft carriers. Their primary role was in naval warfare, providing firepower and defense for fleets. |
+| 6    | Aircraft Carrier | An Aircraft Carrier is a massive carrier that serves as a mobile base for jet fighter aircraft. These ships are capable of launching, recovering, and storing multiple aircraft, making them central to modern naval operations. Jet carriers project air power over vast distances and are often the centerpiece of naval fleets.
